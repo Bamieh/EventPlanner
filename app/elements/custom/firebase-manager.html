@@ -1,0 +1,174 @@
+<dom-module id="firebase-manager">
+  <template>
+    <firebase-auth
+      id="firebaseLogin"
+      user="{{user}}"
+      status-known="{{statusKnown}}"
+      location="https://udacity-eventplanner.firebaseio.com"
+      provider="password"
+      on-error="errorHandler"
+      on-user-created="userSuccessHandler"
+      on-password-changed="userSuccessHandler"
+      on-password-reset="userSuccessHandler"
+      on-user-removed="userSuccessHandler">
+    </firebase-auth>
+    
+    <button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</button>
+    <button on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">Logout</button>
+
+    <h3>Login status:</h3>
+    <p>{{computeLoginStatus(statusKnown, user)}}</p>
+
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'firebase-manager',
+
+    properties: {
+      provider: {
+        type: String,
+        value: 'anonymous'
+      },
+
+      message: {
+        type: String,
+        value: ''
+      },
+
+      email: {
+        type: String,
+        value: ''
+      },
+
+      password: {
+        type: String,
+        value: ''
+      },
+
+      user: {
+        type: Object,
+        value: null
+      },
+      statusKnown: {
+        type: Boolean
+      }
+    },
+    attached: function() {
+      this._addListeners();
+    },
+    _addListeners: function() {
+
+      document.addEventListener('login', this._loginSuccess.bind(this) );
+      document.addEventListener('user-created', this._userCreated.bind(this) );
+      // document.addEventListener('user-created', this._userCreated.bind(this));
+    },
+    _userCreated: function(e) {
+      this.login(this.userProfile);
+      // this.createProfile(e.detail.user, app.userProfile);
+    },
+    createProfile: function(user, profile) {
+      console.log('user: ', user);
+      if(profile) {
+        this.$.firebaseLogin.ref.child('users').child(user.uid).set(profile);
+      }
+    },
+    _loginSuccess: function(e) {
+      var toastText;
+      if(this.userProfile && this.userProfile.justCreated) {
+        delete this.userProfile.password;
+        delete this.userProfile.justCreated;
+        this.createProfile(this.user, this.userProfile);
+        toastText = 'Welcome, ' + this.userProfile.username;
+      }
+      toastText = toastText || 'Welcome back!';
+      app.$.toast.text = toastText
+      app.$.toast.show();
+
+      app.redirect('events');
+    },
+    login: function(userObj) {
+      var params = {
+        'email': userObj.email,
+        'password': userObj.password
+      }
+
+      this.$.firebaseLogin.login(params);
+    },
+
+    logout: function() {
+      this.$.firebaseLogin.logout();
+    },
+
+    errorHandler: function(e) {
+      // remove this soon; after getting the error event inside the signup.html
+      this.message = 'Error: ' + e.detail.message;
+
+      app.$.toast.text = this.message;
+      app.$.toast.show();
+    },
+
+    userSuccessHandler: function(e) {
+      this.message = e.type + ' success!';
+    },
+
+    createUserHandler: function(userProfile) {
+      userProfile.justCreated = true;
+      this.set('userProfile', userProfile);
+      console.log('createUserHandler', userProfile);
+      this.$.firebaseLogin.createUser(userProfile.email, userProfile.password);
+    },
+
+    changePasswordHandler: function(e) {
+      this.$.firebaseLogin.changePassword(this.email, this.password, this.newPassword);
+    },
+
+    resetPasswordHandler: function(e) {
+      this.$.firebaseLogin.sendPasswordResetEmail(this.email);
+    },
+
+    removeUserHandler: function(e) {
+      this.$.firebaseLogin.removeUser(this.email, this.password);
+    },
+
+    computePasswordHidden: function(provider) {
+      return provider !== 'password';
+    },
+
+    computeCreateUserDisabled: function(email, password) {
+      return !email || !password;
+    },
+
+    computeChangePasswordDisabled: function(email, password, newPassword) {
+      return !email || !password || !newPassword;
+    },
+
+    computeResetPasswordDisabled: function(email, password) {
+      return !email || !password;
+    },
+
+    computeRemoveUserDisabled: function(email, password) {
+      return !email || !password;
+    },
+
+    computeLoginHidden: function(statusKnown, user) {
+      return !statusKnown || !!user;
+    },
+
+    computeLogoutHidden: function(statusKnown, user) {
+      return !statusKnown || !user;
+    },
+
+    computeLoginStatus: function(statusKnown, user) {
+      if (statusKnown && user) {
+        return 'Logged in';
+      }
+
+      if (statusKnown) {
+        return 'Logged out';
+      }
+
+      return 'Unknown (checking status...)';
+    }
+  });
+</script>

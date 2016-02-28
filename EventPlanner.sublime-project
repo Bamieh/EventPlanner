@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				".sass-cache",
+				".tmp",
+				"dist",
+				"spec",
+				"node_modules",
+				".sonar"
+			],
+			"path": "."
+		}
+	]
+}

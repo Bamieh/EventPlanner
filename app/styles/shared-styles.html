@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<!-- shared styles for all elements and index.html -->
+<dom-module id="shared-styles">
+  <template>
+
+    <style>
+      .content {
+        color: white;
+        transition: transform 290ms ease-out, opacity 250ms ease-out;
+      }
+      .full-bg {
+        height:100vh;
+        width:100vw;
+        background-color: rgb(199, 154, 108);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+      .full-bg--dim:before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0,0,0,0.5);
+        left: 0;
+        z-index: 1;
+      }
+      iron-pages > *{
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        height: 100vh;
+        width: 100vw;
+        font-family: 'Roboto', sans-serif;
+      }
+      #content.transition {
+        transform: translateX(50px);
+        opacity: 0;
+      }
+
+    </style>
+  </template>
+</dom-module>

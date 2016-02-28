@@ -1,0 +1,135 @@
+<!-- signup-page: signup page -->
+
+<!-- 
+	Imports: - Polymer
+ -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<!--
+
+### Example Usage:
+	<signup-page attribute=""><signup-page>
+
+### Accepts: (attributes you must pass to the component)
+	- attributeName
+		Values:
+
+### Overrides: (properties you can override when calling the component)
+	- PropertyName:
+		Description:
+			Description Here
+		type: 
+		Default value: 
+
+### Fires: (events fired by the component)
+	- EventName
+		Event: When is the event Fired.
+		Returns: What does it return
+
+-->
+
+<dom-module id="signup-page">
+	<style>
+		:host {
+			display: block;
+			color: black;
+		}
+		.card-content {
+			width: 480px;
+		}
+		.card-actions {
+
+		}
+		.double-fields {
+			margin-left: -10px;
+			margin-right: -10px;
+			@apply(--layout);
+	    	@apply(--layout-horizental);
+		}
+		.double-fields paper-input {
+			width: 50%;
+			padding: 0 10px;
+		}
+		.paper-input-description {
+			margin: 0;
+			font-size: 10px;
+			text-align: right;
+		}
+	</style>
+	<template>
+		<paper-card heading="Sign Up!">
+			<div class="card-content">
+				<form is="iron-form" id="form" method="post" action="#">
+					<div class="double-fields">
+						<paper-input name="email" value="{{ emailBinded }}" label="Email Address" required></paper-input>
+						<paper-input name="username" label="Username" value="{{ autoUsername }}" char-counter maxlength="30" required></paper-input>
+					</div>
+
+					<paper-input-container auto-validate attr-for-value="password-input">
+						<label>Password</label>
+						<password-input name="password" class="paper-input-input"></password-input>
+						<paper-input-error>
+							Minimum 6 characters at least 1 Alphabet, 1 Number and 1 Special Character
+						</paper-input-error>
+					</paper-input-container>
+				</form>
+			</div>
+			<div class="card-actions">
+				<paper-button on-tap="_submit">Register</paper-button>
+			</div>
+		</paper-card>
+	</template>
+	<script>
+		(function() {
+			'use strict';
+			Polymer({
+				is: 'signup-page',
+				properties: {
+					emailBinded: {
+						type: String,
+						value: '',
+						observer: '_calcAutoUsername'
+					},
+					autoUsername: {
+						type: String,
+						value: ''
+					}
+				},
+				attached: function() {
+					var form = this.$.form;
+					form.addEventListener('iron-form-presubmit', this._onFormSumbit.bind(this) );
+					// document.addEventListener('user-created', this._userCreated.bind(this));
+				},
+				_calcAutoUsername: function(emailBinded) {
+					this.set('autoUsername', emailBinded.replace(/@.*/, '') );
+				},
+				_redirect: function() {
+					app.redirect('signup');
+				},
+				_onFormSumbit: function(event) {
+					event.preventDefault();
+					// var userObj = {email: "ahmadbamieh@gmail.com", password: "1@a2#S", username: "ahmadbamieh"};
+					var userObj = {email: "bamieh@yamsafer.me", password: "1@a2#S", username: "bamieh"};
+					// var userObj = form.serialize();
+
+					app.firebaseManager.createUserHandler(userObj);
+
+				},
+	            _userCreated: function(e) {
+					if (err) {
+						// this.message....
+						this.$.form.reset();
+					}
+	            },
+				_submit: function() {
+					this.$.form.submit();
+				}
+			});
+		})();
+
+	</script>
+</dom-module>
+
+

@@ -1,0 +1,72 @@
+<!-- events-page: events page -->
+
+<!-- 
+	Imports: - Polymer
+ -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<!--
+
+### Example Usage:
+	<events-page attribute=""><events-page>
+
+### Accepts: (attributes you must pass to the component)
+	- attributeName
+		Values:
+
+### Overrides: (properties you can override when calling the component)
+	- PropertyName:
+		Description:
+			Description Here
+		type: 
+		Default value: 
+
+### Fires: (events fired by the component)
+	- EventName
+		Event: When is the event Fired.
+		Returns: What does it return
+
+-->
+
+<dom-module id="events-page">
+	<template>
+		<template is="dom-bind">
+	    <firebase-collection
+	    	limit-to-first="3"
+	    	location="https://udacity-eventplanner.firebaseio.com/users"
+	    	data="{{dinosaurs}}">
+	    </firebase-collection>
+	    
+	    <template is="dom-repeat" items="[[dinosaurs]]" as="dinosaur">
+	    <div>
+	      <h4>[[dinosaur.__firebaseKey__]]</h4>
+	      <span>[[dinosaur.value]]</span>
+	    </div>
+	    </template>
+	  </template>
+	</template>
+	<script>
+		(function() {
+			'use strict';
+			Polymer({
+				is: 'events-page',
+				properties: {
+					/**
+					* Property description
+					*/
+					dinosaurs: {
+						type: Array
+					}
+				},
+				attached: function() {
+					console.log('s');
+				}
+			});
+		})();
+
+	</script>
+</dom-module>
+
+

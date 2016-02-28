@@ -1,0 +1,9 @@
+{
+  "firebase": "udacity-eventplanner",
+  "public": "app",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

@@ -1,0 +1,110 @@
+<!-- signin-page: signin page -->
+<!-- 
+	Imports: - Polymer
+ -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!--
+
+### Example Usage:
+	<signin-page attribute=""><signin-page>
+
+### Accepts: (attributes you must pass to the component)
+	- attributeName
+		Values:
+
+### Overrides: (properties you can override when calling the component)
+	- PropertyName:
+		Description:
+			Description Here
+		type: 
+		Default value: 
+
+### Fires: (events fired by the component)
+	- EventName
+		Event: When is the event Fired.
+		Returns: What does it return
+
+-->
+<dom-module id="signin-page">
+	<style include="shared-styles"></style>
+    <style is="custom-style">
+    	:host {
+    		--paper-input-container-color: rgba(255,255,255,0.85);
+    		--paper-input-container-input-color: white;
+		    --paper-input-container-focus-color: white;
+		    --paper-card-header-color: white;
+		    --paper-card-background-color: rgba(0,0,0,0.3);
+		    --paper-card-actions: {
+		    	border-color: rgba(0,0,0,0.3);
+		    	@apply(--layout);
+		    	@apply(--layout-horizental);
+				@apply(--layout-end);
+				@apply(--layout-justified);
+		    };
+		}
+		.signin-card__signup {
+			font-size: 10px;
+			color: rgba(255,255,255, 0.85);
+			text-transform: none;
+		}
+		paper-card.signin-card {
+		    width: 380px;
+		}
+
+    }
+    </style>
+    <template>
+	    <iron-image class="full-bg" sizing="cover" preload src="/images/149H.jpg"></iron-image>
+
+        <paper-card class="signin-card">
+
+            <div class="rate-content">
+                <div class="card-content">
+                	<form is="iron-form" id="form" method="post" action="#">
+	                    <paper-input name="email" label="Email Address" required></paper-input>
+	                    <paper-input name="password" label="Password" required></paper-input>
+                    </form>
+                </div>
+                <div class="card-actions">
+                	<paper-button on-tap="_redirect" class="signin-card__signup" noink>*Not a member? Sign up</paper-button>
+                    <paper-button on-tap="_submit">Login</paper-button>
+                </div>
+            </div>
+        </paper-card>
+    </template>
+    <script>
+    (function() {
+        'use strict';
+        Polymer({
+            is: 'signin-page',
+            attached: function() {
+				var form = this.$.form;
+				form.addEventListener('iron-form-presubmit', this._onFormSumbit.bind(this) );
+            },
+            _redirect: function() {
+                app.redirect('signup');
+            },
+            _submit: function() {
+            	this.$.form.submit();
+            },
+            _onFormSumbit: function(event) {
+				event.preventDefault();
+				var userObj = {email: "ahmadbamieh@gmail.com", password: "1@a2#S"};
+				// var userObj = form.serialize();
+				var authOptions = {'remember': 'sessionOnly'};
+				
+				app.firebaseManager.login(userObj);
+
+
+			},
+            _authWithPasswordCallback: function(error, authData) {
+				if (error) {
+					console.log("Login Failed!", error);
+				} else {
+					console.log("Authenticated successfully with payload:", authData);
+				}
+			}
+		});
+    })();
+    </script>
+</dom-module>

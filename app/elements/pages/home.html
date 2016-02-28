@@ -1,0 +1,95 @@
+<!-- home-page: home page -->
+
+<!-- 
+	Imports: - Polymer
+ -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<!--
+
+### Example Usage:
+	<home-page attribute=""><home-page>
+
+### Accepts: (attributes you must pass to the component)
+	- attributeName
+		Values:
+
+### Overrides: (properties you can override when calling the component)
+	- PropertyName:
+		Description:
+			Description Here
+		type: 
+		Default value: 
+
+### Fires: (events fired by the component)
+	- EventName
+		Event: When is the event Fired.
+		Returns: What does it return
+
+-->
+
+<dom-module id="home-page">
+	<style include="shared-styles"></style>
+	<style>
+		:host {
+			display: block;
+		}
+		.home-caption {
+			@apply(--layout-vertical);
+		    @apply(--layout-center-center);
+	        padding: 5px 30px;
+		}
+		.home__bracket {
+			font-size: 240px;
+			font-weight: 100;
+		}
+		.home-caption__title {
+			font-weight: 100;
+			font-size: 36px;
+			text-align: center;
+		}
+		.home-caption__button {
+			font-weight: 300;
+			padding: 10px 30px;
+			font-size: 16px;
+			background-color: rgba(255,255,255,0.2);
+			text-transform: uppercase;
+		}
+	</style>
+	<template>
+		<iron-image class="full-bg full-bg--dim" sizing="cover" preload src="/images/264H.jpg"></iron-image>
+		<div class="home__bracket home__bracket--open">[</div>
+		<div class="home-caption">
+			<h1 class="home-caption__title">Your Awesome Event Planner</h1>
+			<paper-button on-tap="_redirect" class="home-caption__button" raised>Start Now</paper-button>
+		</div>
+		<div class="home__bracket home__bracket--close">]</div>
+
+	</template>
+	<script>
+		(function() {
+			'use strict';
+			Polymer({
+				is: 'home-page',
+				properties: {
+					/**
+					* Property description
+					*/
+					propertyName: {
+						type: Object,
+						value: {},
+						notify: true
+					}
+				},
+				_redirect: function() {
+					app.redirect('signup');
+				}
+			});
+		})();
+
+	</script>
+</dom-module>
+
+
