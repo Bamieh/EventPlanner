@@ -12,12 +12,13 @@
       on-password-reset="userSuccessHandler"
       on-user-removed="userSuccessHandler">
     </firebase-auth>
-    
-    <button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</button>
+    <firebase-document id="fbdoc" data="{{userDocument}}"></firebase-document>
+
+<!--     <button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</button>
     <button on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">Logout</button>
 
     <h3>Login status:</h3>
-    <p>{{computeLoginStatus(statusKnown, user)}}</p>
+    <p>{{computeLoginStatus(statusKnown, user)}}</p> -->
 
   </template>
 </dom-module>
@@ -35,7 +36,10 @@
         type: String,
         value: ''
       },
-
+      userDocument: {
+        type: Object,
+        notify: true
+      },
       email: {
         type: String,
         value: ''
@@ -48,7 +52,10 @@
 
       user: {
         type: Object,
-        value: null
+        value: function() {
+          return {};
+        },
+        notify: true
       },
       statusKnown: {
         type: Boolean
@@ -58,18 +65,18 @@
       this._addListeners();
     },
     _addListeners: function() {
-
       document.addEventListener('login', this._loginSuccess.bind(this) );
       document.addEventListener('user-created', this._userCreated.bind(this) );
-      // document.addEventListener('user-created', this._userCreated.bind(this));
     },
     _userCreated: function(e) {
       this.login(this.userProfile);
+      console.log('user Created!');
       // this.createProfile(e.detail.user, app.userProfile);
     },
     createProfile: function(user, profile) {
-      console.log('user: ', user);
+      console.log('createProfile: ', user);
       if(profile) {
+        console.log('profile', profile);
         this.$.firebaseLogin.ref.child('users').child(user.uid).set(profile);
       }
     },
@@ -82,10 +89,23 @@
         toastText = 'Welcome, ' + this.userProfile.username;
       }
       toastText = toastText || 'Welcome back!';
+      console.log('profile: ', this.user);
+      
+      this.manageUserDocument(this.user.uid)
       app.$.toast.text = toastText
       app.$.toast.show();
 
-      app.redirect('events');
+      // app.redirect('events');
+    },
+    manageUserDocument: function(uid) {
+      var fbdoc = this.$.fbdoc;
+      fbdoc.addEventListener('firebase-value', this._onfirebaseValue.bind(this));
+      console.log('this.user.uid', this.user.uid);
+      fbdoc.set('location', 'https://udacity-eventplanner.firebaseio.com/users/'+this.user.uid)
+    },
+    _onfirebaseValue: function() {
+      console.log('firebaseValue');
+      app.set('userDataReady', true);
     },
     login: function(userObj) {
       var params = {
@@ -115,7 +135,6 @@
     createUserHandler: function(userProfile) {
       userProfile.justCreated = true;
       this.set('userProfile', userProfile);
-      console.log('createUserHandler', userProfile);
       this.$.firebaseLogin.createUser(userProfile.email, userProfile.password);
     },
 

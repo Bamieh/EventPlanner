@@ -33,16 +33,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       next();
     }
 
-    // Routes
-    page('*', scrollToTop, closeDrawer, function(ctx, next) {
-      if (ctx.init) {
+    function manageUserData(ctx, next) {
+      console.log('setting active', app.user);
+      app.$.loader.active = true;
+      if(!app.user || (app.user && !app.user.uid)) {
+        app.$.loader.active = false;
         next();
-      } else {
+        return;
+      }
+
+      if(app.userDataReady) {
+        console.log('dataReady already true');
+        app.$.loader.active = false;
+        next();
+        return;
+      }
+
+      document.addEventListener('user-data-ready', function() {
+        console.log('dataReady event');
+        app.$.loader.active = false;
+        next();
+      });
+    }
+
+    function pageTransition(callback) {
         content.classList.add('transition');
         setTimeout(function(){
           content.classList.remove('transition');
-          next();
+          console.log('removing transition');
+          callback();
         }, 300);
+    }
+
+    // Routes
+    page('*', scrollToTop, closeDrawer, manageUserData, function(ctx, next) {
+      if (ctx.init) {
+        next();
+      } else {
+        pageTransition(next);
       }
     });
 
@@ -55,17 +83,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'home';
     });
 
-    page('/users', function() {
-      app.route = 'users';
-    });
-
-    page('/users/:name', function(data) {
+    page('/user/:name', function(data) {
       app.route = 'user-info';
       app.params = data.params;
     });
     
     page('/signup', function() {
       app.route = 'signup';
+    });
+
+    page('/create-event', function() {
+      app.route = 'create-event';
     });
 
     page('/signin', function() {

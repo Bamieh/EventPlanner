@@ -31,6 +31,7 @@
 -->
 
 <dom-module id="signup-page">
+	<style include="form-shared"></style>
 	<style>
 		:host {
 			display: block;
@@ -42,16 +43,7 @@
 		.card-actions {
 
 		}
-		.double-fields {
-			margin-left: -10px;
-			margin-right: -10px;
-			@apply(--layout);
-	    	@apply(--layout-horizental);
-		}
-		.double-fields paper-input {
-			width: 50%;
-			padding: 0 10px;
-		}
+		
 		.paper-input-description {
 			margin: 0;
 			font-size: 10px;
@@ -59,23 +51,24 @@
 		}
 	</style>
 	<template>
-		<paper-card heading="Sign Up!">
+		<paper-card class="responsive-card" heading="Sign Up!">
 			<div class="card-content">
 				<form is="iron-form" id="form" method="post" action="#">
 					<div class="double-fields">
-						<paper-input name="email" value="{{ emailBinded }}" label="Email Address" required></paper-input>
-						<paper-input name="username" label="Username" value="{{ autoUsername }}" char-counter maxlength="30" required></paper-input>
+						<paper-input type="email" autocomplete="email" name="email" value="{{ emailBinded }}" label="Email Address" autofocus required></paper-input>
+						<paper-input autocomplete="name" name="username" label="Username" value="{{ autoUsername }}" char-counter maxlength="30" required></paper-input>
 					</div>
 
 					<paper-input-container auto-validate attr-for-value="password-input">
 						<label>Password</label>
-						<password-input name="password" class="paper-input-input"></password-input>
+						<password-input class="paper-input-input"></password-input>
 						<paper-input-error>
 							Minimum 6 characters at least 1 Alphabet, 1 Number and 1 Special Character
 						</paper-input-error>
 					</paper-input-container>
 				</form>
 			</div>
+			<div class="card-flex"></div>
 			<div class="card-actions">
 				<paper-button on-tap="_submit">Register</paper-button>
 			</div>

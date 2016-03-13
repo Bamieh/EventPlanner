@@ -1,0 +1,44 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="form-shared">
+  <template>
+	<style>
+		paper-button[disabled] {
+			background: none; 
+		}
+		@media all and (min-width: 481px) {
+			.double-fields {
+				margin-left: -10px;
+				margin-right: -10px;
+				@apply(--layout);
+				@apply(--layout-horizental);
+			}
+			.double-fields paper-input {
+				width: 50%;
+				padding: 0 10px;
+			}
+		}
+
+		@media all and (min-width: 0) and (max-width: 480px) {
+			.responsive-card-multiple {
+				width: 100%;
+				border-radius: 0;
+			}
+			.responsive-card {
+				width: 100%;
+				border-radius: 0;
+				height: 100%;
+				@apply(--layout);
+				@apply(--layout-vertical);
+				
+			}
+			.responsive-card .card-flex {
+				@apply(--layout-flex);
+			}
+			.responsive-card .card-content {
+				width: auto;
+			}
+		}
+	</style>
+  </template>
+</dom-module>

@@ -1,72 +1,201 @@
 <!-- events-page: events page -->
-
 <!-- 
-	Imports: - Polymer
+    Imports: - Polymer
  -->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
-
 <!--
 
 ### Example Usage:
-	<events-page attribute=""><events-page>
+    <events-page attribute=""><events-page>
 
 ### Accepts: (attributes you must pass to the component)
-	- attributeName
-		Values:
+    - attributeName
+        Values:
 
 ### Overrides: (properties you can override when calling the component)
-	- PropertyName:
-		Description:
-			Description Here
-		type: 
-		Default value: 
+    - PropertyName:
+        Description:
+            Description Here
+        type: 
+        Default value: 
 
 ### Fires: (events fired by the component)
-	- EventName
-		Event: When is the event Fired.
-		Returns: What does it return
+    - EventName
+        Event: When is the event Fired.
+        Returns: What does it return
 
 -->
-
 <dom-module id="events-page">
-	<template>
-		<template is="dom-bind">
-	    <firebase-collection
-	    	limit-to-first="3"
-	    	location="https://udacity-eventplanner.firebaseio.com/users"
-	    	data="{{dinosaurs}}">
-	    </firebase-collection>
-	    
-	    <template is="dom-repeat" items="[[dinosaurs]]" as="dinosaur">
-	    <div>
-	      <h4>[[dinosaur.__firebaseKey__]]</h4>
-	      <span>[[dinosaur.value]]</span>
-	    </div>
-	    </template>
-	  </template>
-	</template>
-	<script>
-		(function() {
-			'use strict';
-			Polymer({
-				is: 'events-page',
-				properties: {
-					/**
-					* Property description
-					*/
-					dinosaurs: {
-						type: Array
-					}
-				},
-				attached: function() {
-					console.log('s');
-				}
-			});
-		})();
+    <style include="shared-styles"></style>
+    <style is="custom-style">
+    :host {
+        @apply(--layout-horizental);
+        --paper-input-container-color: rgba(255, 255, 255, 0.85);
+        --paper-input-container-input-color: white;
+        --paper-input-container-focus-color: white;
+        --paper-card-header-color: white;
+        --paper-card-background-color: rgba(0, 0, 0, 0.3);
+        ;
+    }
+    
+    .event-item {
+        width: 480px;
+        margin-bottom: 15px;
+        min-height: 50px;
+    }
+    
+    .location-icon {
+        /*float: right;
+        font-size: 15px;
+        vertical-align: middle;*/
+    }
+    .event-details {
+        font-size: 13px;
+        line-height: 24px;
+        text-align: right;
+        margin-right: 50px;
+    }
 
-	</script>
+    iron-icon {
+        vertical-align: sub;
+        height: 18px;
+        width: 18px;
+    }
+    iron-list {
+        height: 100%;
+        width: 100%;
+        /*@apply(--layout-vertical);
+        @apply(--layout-center-center);*/
+    }
+    .event-edit {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        border-radius: 0 2px 2px 0;
+        right: 0;
+        margin: 0;
+        width: 60px;
+        min-width: 60px;
+        padding-top: 30px;
+    }
+    .event-content {
+        @apply(--layout);
+        @apply(--layout-horizental);
+        @apply(--layout-justified);
+    }
+    .event-container {
+        @apply(--layout);
+        @apply(--layout-center-justified);
+        margin-top: 15px;
+    }
+    .event-heading {
+        word-break: break-word;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    .event-type {
+        font-size: 12px;
+        font-weight: 300;
+    } 
+    </style>
+    <style include="form-shared"></style>
+    <template>
+        <template is="dom-if" if="[[ events.length ]]">
+            <iron-list items="[[events]]" as="event">
+                <template>
+                    <div class="event-container">
+                        <paper-card class="event-item responsive-card-multiple">
+                            <div class="card-content event-content">
+                                
+                                <div class="event-heading">
+                                    [[event.name]]
+                                    <div class="event-type">[[event.details.eventType]]</div>
+                                </div>
+                                <div class="event-details">
+                                    <div class="location">
+                                        <iron-icon class="location-icon" icon="myIconSet:location-on"></iron-icon>
+                                        <span>[[event.details.location]]</span>
+                                    </div>
+                                    <div class="dates">
+                                        <iron-icon class="location-icon" icon="icons:event"></iron-icon>
+                                        [[event.details.startDate]] [[event.details.startTime]]
+                                    </div>
+                                </div> 
+                            </div>
+                            <paper-button class="event-edit">
+                                <iron-icon class="location-icon" icon="myIconSet:visibility"></iron-icon>
+                            </paper-button>
+                        </paper-card>
+                    </div>
+                </template>
+            </iron-list>
+            <!-- <template is="dom-repeat" items="[[ events ]]" as="event">
+                <paper-card class="event-item">
+                    <div class="card-content">
+                        <div class="event-title">
+                            <div class="heading">
+                                [[event.name]] -- [[event.details.eventType]]
+                            </div>
+                            <div class="host">
+                                Hosted By: [[ event.details.eventHost ]]
+                            </div>
+                        </div>
+                        <div class="event-details">
+                            <div class="location">
+                                <iron-icon class="location-icon" icon="myIconSet:location-on"></iron-icon>
+                                <span>[[event.details.location]]</span>
+                            </div>
+                            <div class="dates">
+                                <iron-icon class="location-icon" icon="icons:event"></iron-icon>
+                                [[event.details.startDate]] [[event.details.startTime]] - [[event.details.endDate]] [[event.details.endTime]]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <paper-button>Full Details</paper-button>
+                </paper-card>
+            </template> -->
+            <paper-button on-tap="_redirect" class="signin-card__signup" noink>
+                Create a new Event
+            </paper-button>
+        </template>
+        <template is="dom-if" if="[[ !events.length ]]">
+            <paper-button on-tap="_redirect" class="signin-card__signup" noink>
+                You dont have any events yet, click here to add an Event.
+            </paper-button>
+        </template>
+    </template>
+    <script>
+    (function() {
+        'use strict';
+        Polymer({
+            is: 'events-page',
+            properties: {
+                eventsObj: {
+                    type: Object,
+                    value: function() {
+                        return {};
+                    }
+                },
+                events: {
+                    type: Array,
+                    computed: '_computeArray(eventsObj)'
+                }
+            },
+            _computeArray: function(obj) {
+                var ar = Object.keys(obj).map(function(key) {
+                    return {
+                        name: key,
+                        details: obj[key]
+                    };
+                });
+                console.log(ar);
+                return ar;
+            },
+            _redirect: function() {
+                app.redirect('create-event');
+            }
+        });
+    })();
+    </script>
 </dom-module>
-
-

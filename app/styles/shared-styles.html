@@ -12,13 +12,14 @@
       }
       .full-bg {
         height:100vh;
-        width:100vw;
+        width:100%;
         background-color: rgb(199, 154, 108);
         position: absolute;
         top: 0;
         left: 0;
         z-index: -1;
       }
+      
       .full-bg--dim:before {
         content: '';
         position: absolute;
@@ -28,12 +29,18 @@
         left: 0;
         z-index: 1;
       }
-      iron-pages > *{
-        @apply(--layout-horizontal);
-        @apply(--layout-center-center);
-        height: 100vh;
-        width: 100vw;
+
+      iron-pages {
+        height: 100%;
+      }
+      iron-pages > * {
+        height: inherit;
+        width: 100%;
         font-family: 'Roboto', sans-serif;
+      /*}
+      iron-pages > .centered {*/
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
       }
       #content.transition {
         transform: translateX(50px);

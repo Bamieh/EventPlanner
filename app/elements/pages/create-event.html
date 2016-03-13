@@ -1,0 +1,326 @@
+<!-- create-event-page: signin page -->
+<!-- 
+	Imports: - Polymer
+ -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<!--
+
+### Example Usage:
+	<create-event-page attribute=""><create-event-page>
+
+### Accepts: (attributes you must pass to the component)
+	- attributeName
+		Values:
+
+### Overrides: (properties you can override when calling the component)
+	- PropertyName:
+		Description:
+			Description Here
+		type: 
+		Default value: 
+
+### Fires: (events fired by the component)
+	- EventName
+		Event: When is the event Fired.
+		Returns: What does it return
+
+-->
+<dom-module id="create-event-page">
+	<style include="form-shared"></style>
+	<style is="custom-style">
+		:host {
+			--paper-input-container-color: rgba(255,255,255,0.85);
+			--paper-input-container-input-color: white;
+			--paper-input-container-focus-color: white;
+			--paper-card-header-color: white;
+			--paper-card-background-color: rgba(0,0,0,0.3);
+			--paper-card-actions: {
+				border-color: rgba(0,0,0,0.3);
+				@apply(--layout);
+				@apply(--layout-horizental);
+				@apply(--layout-end);
+				@apply(--layout-justified);
+			};
+		}
+		.signin-card__signup {
+			font-size: 10px;
+			color: rgba(255,255,255, 0.85);
+			text-transform: none;
+		}
+		.create-event-card--title {
+
+		}
+		.create-event-card {
+			@apply(--layout);
+			@apply(--layout-vertical);
+			overflow: hidden;
+			min-width: 380px;
+		}
+		.create-event-card .card-content {
+			min-height: 240px;
+		}
+		.duplicate-error {
+			font-size: 10px;
+			color: #DD2C00;
+			margin-top: -5px;
+			font-weight: 600;
+		}
+
+	}
+	</style>
+	<style include="form-shared"></style>
+	<template>
+		<iron-image class="full-bg" sizing="cover" preload src="/images/149H.jpg"></iron-image>
+		<geo-location id="geoLoc"></geo-location>
+		<iron-ajax id="getCity" handle-as="json" on-response="handleResponse"></iron-ajax>
+		<paper-card class="create-event-card responsive-card"  heading$="[[CurrentTitle]]">
+			<div class="card-content">
+				<form is="iron-form" id="form" method="post" action="#">
+				   <neon-animated-pages
+					id="pages" selected="{{ currentIndex }}"
+					entry-animation="[[ entryAnimation ]]"
+					exit-animation="[[ exitAnimation ]]">
+						<neon-animatable>
+
+							<paper-input name="event-type" value="{{ eventType }}" label="Type of the event" list="event-type" autofocus required></paper-input>
+							<paper-input name="event-name" value="{{ eventName }}" label="Event Name" required></paper-input>
+							<template is="dom-if" if="[[ _duplicateEvent ]]">
+								<span class="duplicate-error">You already created an event with the same name.</span>
+							</template>
+							<paper-input name="event-host" value="[[ userData.username ]]" label="Event Host" required></paper-input>
+							<datalist id="event-type">
+								<template is="dom-repeat" items="[[eventTypes]]" as="eventOption">
+									<option value="[[eventOption]]">
+								</template>
+							</datalist>
+						</neon-animatable>
+						<neon-animatable>
+							<div class="double-fields">
+								<paper-input type="date" value="{{ date }}" name="start-date" label="Start Date" min="[[ today ]]"></paper-input>
+								<paper-input type="date" value="[[ endDate ]]" name="end-date" min="[[ date ]]" label="End Date"></paper-input>
+							</div>
+							<div class="double-fields">
+								<paper-input type="time" value="{{ time }}" name="start-time" label="Start Date"></paper-input>
+								<paper-input type="time" value="[[ endTime ]]"name="end-time" label="End Date"></paper-input>
+							</div>
+
+							<paper-input name="location" required value="[[ address ]]" label="Event Location"></paper-input>
+							
+						</neon-animatable>
+						<neon-animatable>
+							
+						</neon-animatable>
+						<neon-animatable>
+							
+						</neon-animatable>
+					</neon-animated-pages>
+				</form>
+			</div>
+			<div class="card-flex"></div>
+			<div class="card-actions">
+				<paper-button on-tap="_prev" disabled="[[ _hasback ]]">Back</paper-button>
+				<paper-button on-tap="_sumbit"> [[_sumbitText]]</paper-button>
+			</div>
+		</paper-card>
+	</template>
+	<script>
+	(function() {
+		'use strict';
+		Polymer({
+			is: 'create-event-page',
+			properties: {
+				entryAnimation: {
+					type: String,
+					value: function() {
+						return "slide-from-right-animation";
+					}
+				},
+				exitAnimation: {
+					type: String,
+					value: function() {
+						return "slide-left-animation"
+					}
+				},
+				_sumbitText: {
+					type: String,
+					value: 'Next',
+					computed: '_calcSumbitText(currentIndex)'
+				},
+				pageTitles: {
+					type: Array,
+					value: function() {
+						return ['General Event Information', 'Dates and Location', 'Guest List', 'Custom Message']
+					}
+				},
+				currentIndex: {
+					type: Number,
+					value: 0,
+					observer: '_computeTitle'
+				},
+				userData: {
+					type: Object,
+					value: function() {
+						return {};
+					}
+				},
+				eventType: {
+					type: String,
+					observer: '_updateEventName'
+				},
+				eventName: {
+					type: String,
+					observer: '_checkDuplicate',
+					notify: true
+				},
+				time: String,
+				date: String,
+				endTime: {
+					type: String,
+					computed: '_calcEndTime(time)'
+				},
+				endDate: {
+					type: String,
+					computed: '_calcEndDate(date)'
+				},
+				_hasback: {
+					type: Boolean,
+					computed: '_calcHasBack(currentIndex)'
+				},
+				_duplicateEvent: {
+					type: Boolean,
+					value: false
+				},
+				address: String,
+				eventTypes: {
+					type: Array,
+					value: function() {
+						return ["Conference", "Seminar", "Meeting", "Team Building Event", "Trade Show", "Business Dinner", "Golf Event", "Press Conference", "Networking Event", "Incentive Travel", "Opening Ceremony", "Product Launch", "Theme Party", "VIP Event", "Trade Fair", "Annual Shareholder Meeting", "Award Ceremony", "Incentive Event", "Board Meeting", "Executive Retreat", "Wedding", "Birthday", "wedding anniversary", "Family Event"].sort();
+					}
+				}
+			},
+			attached: function() {
+				var form = this.$.form;
+				form.addEventListener('iron-form-presubmit', this._onFormSumbit.bind(this) );
+				var loc = this.$.geoLoc;
+				var ajaxCity = this.$.getCity;
+
+				var self = this;
+				loc.addEventListener('geo-response', function(e) {
+					// var lat = this.latitude;
+					// var long = this.longitude;
+					var lat = '48.856614';
+					var long = '2.3522219000000177';
+					ajaxCity.set('url', 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false&key=AIzaSyBxbPcTtB4jSpZ7yY7iTXlpgmCVtwBNDzE');
+					ajaxCity.generateRequest();
+				});
+				this._setDate();
+			},
+			handleResponse: function(e) {
+				this._setAddress(e.detail.response);
+			},
+			_setAddress: function(data) {
+				if(data && data.status === 'OK') {
+					this.set('address', this.address || data.results[0].formatted_address);
+				}
+			},
+			_addZero: function(o) {
+				if (o < 10) { o = "0" + o; }
+				return o;
+			},
+			_setDate: function() {
+				var today = new Date(),
+					dd = this._addZero(today.getDate()),
+					mm = this._addZero(today.getMonth()+1),
+					yyyy = today.getFullYear(),
+					date = yyyy+'-'+dd+'-'+mm;
+ 
+				this.set('date', date);
+				this.set('today', date);
+			},
+			_calcEndDate: function(date) {
+				if(this.endDate === undefined || this.endDate === '' || this.endDate < date) {
+					return date;
+				}
+				return this.endDate;
+			},
+			_calcEndTime: function(time) {
+				if(time.length < 4 || this.endTime !== undefined) return this.endTime;
+				var temp = time.split(':');
+				return this._addZero(Number(temp[0]) + 3) + ':' + temp[1];
+			},
+			_updateEventName: function(type) {
+				if(this.eventName === '' || this.eventName === undefined) {
+					this.set('eventName', type);
+				}
+			},
+			_computeTitle: function(i) {
+				this.set('CurrentTitle', this.pageTitles[i]);
+				return this.pageTitles[i];
+			},
+			_redirect: function() {
+				app.redirect('signup');
+			},
+			_calcSumbitText: function(currentIndex) {
+				console.log(currentIndex)
+				return (currentIndex < this.pageTitles.length-1)? 'Next' : 'Publish!';
+			},
+			_sumbit: function() {
+				this._validationRules();
+				this.$.form.submit();
+			},
+			_next: function() {
+				this.$.pages.selectNext();
+			},
+			_prev: function() {
+				this._validationRules();
+				this.$.pages.selectPrevious();
+			},
+			_checkDuplicate: function(inputText) {
+				if(!app.userData) { return };
+				if(app.userData.events && app.userData.events[inputText] && app.userData.events[inputText].published) {
+					this.set('_duplicateEvent', true);
+				} else {
+					this.set('_duplicateEvent', false);
+				}
+			},
+			_validationRules: function() {
+				this.$$('[name="start-date"]').required = this._validate(1);
+				this.$$('[name="start-time"]').required = this._validate(1);
+				this.$$('[name="end-date"]').required = this._validate(1);
+				this.$$('[name="end-time"]').required = this._validate(1);
+				this.$$('[name="location"]').required = this._validate(1);
+			},
+			_validate: function(index) {
+				return (index === this.currentIndex);
+			},
+			_onFormSumbit: function(event) {
+				event.preventDefault();
+				var inputs = this.$.form.serialize(),
+					eventKey = inputs['event-name'],
+					published = Boolean(this.currentIndex === this.pageTitles.length-1);
+				console.log(inputs);
+				if(published) {
+					console.log('publishing event');
+					app.userData.events = app.userData.events || {};
+					app.set('userData.events.'+ eventKey,  {
+						'eventType': 'Birthday',
+						'eventHost': 'bamieh3',
+						'endDate': "2016-12-03",
+						'endTime': "",
+						'location': "Hôtel de Ville, 75004 Paris, France",
+						'startDate': "2016-12-03",
+						'startTime': ""
+					});
+				} else {
+					this._next();
+				}
+			},
+			_calcHasBack: function(currentIndex) {
+				return (currentIndex > 0)? false : true;
+			}
+		});
+	})();
+	</script>
+</dom-module>

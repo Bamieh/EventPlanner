@@ -35,7 +35,7 @@
 		    --paper-card-header-color: white;
 		    --paper-card-background-color: rgba(0,0,0,0.3);
 		    --paper-card-actions: {
-		    	border-color: rgba(0,0,0,0.3);
+		    	border-color: rgba(0,0,0,0.4);
 		    	@apply(--layout);
 		    	@apply(--layout-horizental);
 				@apply(--layout-end);
@@ -47,29 +47,28 @@
 			color: rgba(255,255,255, 0.85);
 			text-transform: none;
 		}
-		paper-card.signin-card {
+		.signin-card {
 		    width: 380px;
 		}
 
     }
     </style>
+	<style include="form-shared"></style>
     <template>
 	    <iron-image class="full-bg" sizing="cover" preload src="/images/149H.jpg"></iron-image>
 
-        <paper-card class="signin-card">
-
-            <div class="rate-content">
+        <paper-card class="signin-card responsive-card">            
                 <div class="card-content">
                 	<form is="iron-form" id="form" method="post" action="#">
-	                    <paper-input name="email" label="Email Address" required></paper-input>
-	                    <paper-input name="password" label="Password" required></paper-input>
+	                    <paper-input type="email" name="email" label="Email Address" required autofocus></paper-input>
+	                    <paper-input type="password" name="password" label="Password" required></paper-input>
                     </form>
                 </div>
+                <div class="card-flex"></div>
                 <div class="card-actions">
                 	<paper-button on-tap="_redirect" class="signin-card__signup" noink>*Not a member? Sign up</paper-button>
                     <paper-button on-tap="_submit">Login</paper-button>
                 </div>
-            </div>
         </paper-card>
     </template>
     <script>

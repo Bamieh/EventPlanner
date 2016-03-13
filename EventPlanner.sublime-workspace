@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"event",
+				"event-host"
+			],
+			[
+				"_sub",
+				"_sumbitText"
+			],
+			[
+				"endtIME",
+				"endTime"
+			],
+			[
+				"get",
+				"getCity"
+			],
+			[
+				"set",
+				"setFbLocation"
+			],
+			[
 				"mar",
 				"margin-bottom"
 			],
@@ -349,9 +369,6 @@
 			]
 		]
 	},
-	"buffers":
-	[
-	],
 	"build_system": "",
 	"build_system_choices":
 	[
@@ -359,7 +376,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 398.0,
+		"height": 354.0,
 		"last_filter": "tabs",
 		"selected_items":
 		[
@@ -456,7 +473,7 @@
 				"Package Control: List Packages"
 			]
 		],
-		"width": 698.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -475,12 +492,25 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/Users/bamieh/Bamieh/Udacity/EventPlanner"
-	],
 	"file_history":
 	[
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/routing.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/create-event.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/edit-event.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/password-input.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/signup.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/firebase-manager.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/index.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/scripts/app.js",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/main.css",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/signin.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/form-shared.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/elements.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/events.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/app-theme.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/bower_components/firebase-element/firebase-query-behavior.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/index_rm",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/bower_components/firebase-element/firebase-collection.html",
 		"/Users/bamieh/Bamieh/Udacity/EventPlanner/EventPlanner.sublime-project",
 		"/Users/bamieh/Bamieh/TheShip/api/services/HotelService/index.js",
 		"/Users/bamieh/Bamieh/TheShip/api/controllers/HotelController.js",
@@ -591,28 +621,11 @@
 		"/Users/bamieh/Bamieh/TheShip/views/hotelpage/components/map.jade",
 		"/Users/bamieh/Bamieh/TheShip/assets/js/components/searcher/index.js",
 		"/Users/bamieh/Bamieh/TheShip/assets/styles/search/ys-fullscreen-dialog.scss",
-		"/Users/bamieh/Bamieh/TheShip/assets/styles/hotelpage/index.scss",
-		"/Users/bamieh/Bamieh/TheShip/config/env/prealpha.js",
-		"/Users/bamieh/Bamieh/TheShip/config/routes.js",
-		"/Users/bamieh/Bamieh/TheShip/views/search/index.jade",
-		"/Users/bamieh/Bamieh/TheShip/assets/styles/components/cards.scss",
-		"/Users/bamieh/Bamieh/TheShip/assets/elements/ys-datepicker/ys-datepicker.html",
-		"/Users/bamieh/Bamieh/TheShip/views/components/datepicker/fullscreen.jade",
-		"/Users/bamieh/Bamieh/TheShip/views/components/map-canvas/index.jade",
-		"/Users/bamieh/Bamieh/TheShip/views/city/map-canvas.jade",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/hotelpage/photoswipe.js",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/components/photoswipe/index.js",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/components/photoswipe/default-ui.js",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/hotelpage/swiper.js",
-		"/Users/bamieh/Bamieh/TheShip/package.json",
-		"/Users/bamieh/Bamieh/TheShip/assets/bower_components/google-map-static/google-map-static.html",
-		"/Users/bamieh/Bamieh/TheShip/config/env/alpha.js",
-		"/Users/bamieh/Bamieh/TheShip/config/env/development.js",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/components/datepicker/index.js"
+		"/Users/bamieh/Bamieh/TheShip/assets/styles/hotelpage/index.scss"
 	],
 	"find":
 	{
-		"height": 25.0
+		"height": 70.0
 	},
 	"find_in_files":
 	{
@@ -675,6 +688,75 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"fbdoc",
+			"{{",
+			"ready",
+			"_updateEventName",
+			"eventType",
+			"d",
+			"_updateEventName",
+			"updateEventName",
+			"eventType",
+			"_computeEventName",
+			"eventType",
+			"eventName",
+			"_duplicateEvent",
+			"duplicateEvent",
+			"div",
+			"dom-if",
+			"PUBLISHED",
+			"published",
+			"_sumbit",
+			"required",
+			"pageTitles.length",
+			"app.",
+			"user-data-ready",
+			"next",
+			"conso",
+			"calcEndTime",
+			"calcEndDate",
+			"value",
+			"addZero",
+			"i",
+			"today",
+			"date",
+			"var",
+			"10",
+			"style",
+			"getAddress",
+			"list=\"event-type\" ",
+			"alue=\"{{ eventType }}\"",
+			"event de",
+			"userId",
+			"list=\"browsers\"",
+			"dom-repeat",
+			", ",
+			"browsers",
+			"redirect",
+			"create-event-page",
+			"../bower_components",
+			"signin-page",
+			"create-event",
+			"create-events",
+			"<a",
+			"next();",
+			"loader",
+			"dom-if",
+			"events-page",
+			"_onQueryValue",
+			"Value",
+			"value",
+			"off",
+			"on",
+			"toolbar",
+			"on:",
+			"firebaseValue",
+			"this.",
+			"userId",
+			"baseURL",
+			"dinosaur",
+			"dinosaurs",
+			"createUserHandler",
 			".new(",
 			".new",
 			"consol",
@@ -733,76 +815,7 @@
 			".endorsment-labels",
 			"mixin endorsmet-labels",
 			"__ti",
-			"__tot",
-			"reser",
-			"input-group",
-			"input-group-addon",
-			"input-group-btn",
-			".input-group-btn",
-			"media",
-			"media-right",
-			"media-list",
-			".media-list",
-			".media",
-			".panel",
-			".carousel-control",
-			"min-h",
-			"min-",
-			"horiz",
-			"#rooms {",
-			"#rooms",
-			" ",
-			"word-wrap",
-			"no-warp",
-			"nowarp",
-			"reserve",
-			"load-more",
-			"hotel-location",
-			"benefits",
-			"nightly_rates",
-			"cursor: pointer;",
-			"    cursor: pointer;",
-			".header",
-			".header__map",
-			".select-room",
-			"#dateless-rooms",
-			"#basket",
-			"benefits",
-			"ameniti",
-			"#basket",
-			"moment",
-			"locale('en').format('MM/DD/YYYY')",
-			"#checkin_in_button",
-			"checkoutInButton",
-			"checkinInButton",
-			"updateQ",
-			"taxes-not-included",
-			"\"set-your-dates\": \"set-your-dates\",",
-			"\"to-see-the-prices\": \"to-see-the-prices\",",
-			"\"read-all\": \"read-all\",",
-			"\"reviews\": \"reviews\",",
-			"\"good\": \"good\",",
-			"\"bad\": \"bad\",",
-			"rate.benefits.benefits",
-			"ameni",
-			"rooms",
-			"tax",
-			"taxes",
-			"book-now",
-			"total",
-			"room-details",
-			"amenities",
-			"room-details",
-			"hotel-description",
-			"expand-map",
-			"select-your-rooms",
-			"reserve-room",
-			"description",
-			"ys-i18n",
-			" ",
-			"canc",
-			"poli",
-			"\"good"
+			"__tot"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -824,17 +837,9 @@
 		"whole_word": false,
 		"wrap": true
 	},
-	"groups":
-	[
-		{
-			"sheets":
-			[
-			]
-		}
-	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -868,10 +873,9 @@
 		"height": 161.0
 	},
 	"pinned_build_system": "",
-	"project": "EventPlanner.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -880,6 +884,30 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"routing",
+				"app/elements/routing.html"
+			],
+			[
+				"index",
+				"app/index.html"
+			],
+			[
+				"elemen",
+				"app/elements/elements.html"
+			],
+			[
+				"firebasebeh",
+				"app/bower_components/firebase-element/firebase-query-behavior.html"
+			],
+			[
+				"firebase-mana",
+				"app/elements/custom/firebase-manager.html"
+			],
+			[
+				"firebasecol",
+				"app/bower_components/firebase-element/firebase-collection.html"
+			],
 			[
 				"hotelservic",
 				"api/services/HotelService/index.js"
@@ -1367,30 +1395,6 @@
 			[
 				"basket.js",
 				"assets/js/hotelpage/dateful/basket.js"
-			],
-			[
-				"checkoutcon",
-				"api/controllers/CheckoutController.js"
-			],
-			[
-				"basket.",
-				"assets/js/hotelpage/dateful/basket.js"
-			],
-			[
-				"gall",
-				"assets/styles/hotelpage/gallery.scss"
-			],
-			[
-				"details.sc",
-				"assets/styles/hotelpage/details.scss"
-			],
-			[
-				"gene",
-				"assets/styles/components/general.scss"
-			],
-			[
-				"yscur",
-				"assets/elements/ys-currency/ys-currency.html"
 			]
 		],
 		"width": 0.0
@@ -1413,7 +1417,6 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 0,
 	"settings":
 	{
 	},

@@ -15,9 +15,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
   
+  app.properties.userDataReady = {
+    type: Boolean,
+    observer: '_onUserDataReadyChanged'
+  }
+  app._onUserDataReadyChanged = function(newValue) {
+    console.log('readyChanged', newValue);
+    app.fire('user-data-ready', newValue, { bubbles: true });
+  }
+  
 
   // Sets app default base URL
   app.baseUrl = '/';
+
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
     // set app.baseURL to '/your-pathname/' if running from folder in production
@@ -48,29 +58,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.userSuccessHandler = function(e) {
     console.log(e.type + ' success!');
   }
+  app.navigate = function(e) {
+    app.redirect(e.currentTarget.dataset.route);
+    console.log( app.$.drawer.closeDrawer() );
+  }
 
-  // var firebase = {
-  //   instance: undefined,
-  //   init: function() {
-  //     this.instance = new Firebase('https://udacity-eventplanner.firebaseio.com');
-  //   },
-  //   createUser: function(userObj, callback) {
-  //     var self = this;
-  //     this.instance.createUser(userObj, function(err, user) {
-  //       if(user) {
-          
-  //       }
-  //       callback(err, user);
-  //     });
-  //   },
-  //   authWithPassword: function(userObj, options, callback) {
-  //     this.instance.authWithPassword(userObj, callback, options);
-  //   },
-  //   addToUsersDB: function() {
-
-  //   }
-  // }
-
-  // app.set('firebase', firebase);
-  // app.firebase.init();
 })(document);
