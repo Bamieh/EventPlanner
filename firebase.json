@@ -1,6 +1,6 @@
 {
   "firebase": "udacity-eventplanner",
-  "public": "app",
+  "public": "dist",
   "ignore": [
     "firebase.json",
     "**/.*",

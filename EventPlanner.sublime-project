@@ -6,7 +6,6 @@
 			[
 				".sass-cache",
 				".tmp",
-				"dist",
 				"spec",
 				"node_modules",
 				".sonar"
