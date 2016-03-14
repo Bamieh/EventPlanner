@@ -19,20 +19,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     type: Boolean,
     observer: '_onUserDataReadyChanged'
   }
+  app.properties.loggedIn = {
+    type: Boolean,
+    observer: '_onLoggedInChanged'
+  }
+
+  app._onLoggedInChanged = function(newValue) {
+    app.fire('logged-in-ready', newValue, { bubbles: true });
+  }
   app._onUserDataReadyChanged = function(newValue) {
-    console.log('readyChanged', newValue);
     app.fire('user-data-ready', newValue, { bubbles: true });
   }
   
 
   // Sets app default base URL
   app.baseUrl = '/';
-
-  if (window.location.port === '') {  // if production
-    // Uncomment app.baseURL below and
-    // set app.baseURL to '/your-pathname/' if running from folder in production
-    // app.baseUrl = '/polymer-starter-kit/';
-  }
 
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled—it won't be in the dev environment.
@@ -47,17 +48,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.addEventListener('dom-change', function() {
     var firebaseManager = app.$['firebase-manager'];
     app.set('firebaseManager', firebaseManager);
-    console.log('Our app is ready to rock!');
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
-  window.addEventListener('WebComponentsReady', function() {
-    // imports are loaded and elements have been registered
-  });
+  // window.addEventListener('WebComponentsReady', function() {
+  //   // imports are loaded and elements have been registered
+  // });
   
-  app.userSuccessHandler = function(e) {
-    console.log(e.type + ' success!');
-  }
+  // app.userSuccessHandler = function(e) {
+  //   console.log(e.type + ' success!');
+  // }
 
   app.closeDrawer = function() {
     app.$.drawer.closeDrawer();
@@ -69,6 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.logout = function() {
     console.log('loggin out');
+    app.redirect('home');
     app.firebaseManager.logout();
   }
 

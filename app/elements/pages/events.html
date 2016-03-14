@@ -1,30 +1,6 @@
 <!-- events-page: events page -->
-<!-- 
-    Imports: - Polymer
- -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<!--
 
-### Example Usage:
-    <events-page attribute=""><events-page>
-
-### Accepts: (attributes you must pass to the component)
-    - attributeName
-        Values:
-
-### Overrides: (properties you can override when calling the component)
-    - PropertyName:
-        Description:
-            Description Here
-        type: 
-        Default value: 
-
-### Fires: (events fired by the component)
-    - EventName
-        Event: When is the event Fired.
-        Returns: What does it return
-
--->
 <dom-module id="events-page">
     <style include="shared-styles"></style>
     <style is="custom-style">
@@ -39,15 +15,10 @@
     }
     
     .event-item {
-        width: 480px;
+        width: 600px;
         margin-bottom: 15px;
         min-height: 50px;
-    }
-    
-    .location-icon {
-        /*float: right;
-        font-size: 15px;
-        vertical-align: middle;*/
+        border-radius: 0;
     }
     .event-details {
         font-size: 13px;
@@ -65,8 +36,6 @@
         height: 100%;
         width: 100%;
         padding-bottom: 50px;
-        /*@apply(--layout-vertical);
-        @apply(--layout-center-center);*/
     }
     .event-edit {
         height: 100%;
@@ -112,6 +81,12 @@
             display: none;
         }
     }
+    @media all and (min-width: 481) and (max-width: 620px) {
+        .event-item {
+            width: 480px;
+        }
+    }
+    
     </style>
     <style include="form-shared"></style>
     <template>
@@ -175,14 +150,13 @@
                 app.redirect('event/'+ e.currentTarget.dataset.route);
             },
             _computeArray: function(obj) {
-                var ar = Object.keys(obj).map(function(key) {
+                if(!obj) return [];
+                return Object.keys(obj).map(function(key) {
                     return {
                         name: key,
                         details: obj[key]
                     };
                 });
-                console.log(ar);
-                return ar;
             },
             _redirect: function() {
                 app.redirect('create-event');

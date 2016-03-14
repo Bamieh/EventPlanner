@@ -14,12 +14,6 @@
     </firebase-auth>
     <firebase-document id="fbdoc" data="{{userDocument}}"></firebase-document>
 
-<!--     <button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</button>
-    <button on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">Logout</button>
-
-    <h3>Login status:</h3>
-    <p>{{computeLoginStatus(statusKnown, user)}}</p> -->
-
   </template>
 </dom-module>
 <script>
@@ -49,13 +43,25 @@
         type: String,
         value: ''
       },
-
+      loggedIn: {
+        type: Boolean,
+        computed: 'computeLoginStatus(statusKnown, user)',
+        reflectToAttribute: true,
+        readOnly: true,
+        notify: true
+      },
       user: {
         type: Object,
         value: function() {
           return {};
         },
         notify: true
+      },
+      loginCallback: {
+        type: Function,
+        value: function() {
+          return function() {};
+        }
       },
       statusKnown: {
         type: Boolean
@@ -70,42 +76,41 @@
     },
     _userCreated: function(e) {
       this.login(this.userProfile);
-      console.log('user Created!');
-      // this.createProfile(e.detail.user, app.userProfile);
     },
     createProfile: function(user, profile) {
-      console.log('createProfile: ', user);
       if(profile) {
-        console.log('profile', profile);
         this.$.firebaseLogin.ref.child('users').child(user.uid).set(profile);
       }
     },
     _loginSuccess: function(e) {
-      var toastText;
       if(this.userProfile && this.userProfile.justCreated) {
         delete this.userProfile.password;
         delete this.userProfile.justCreated;
         this.createProfile(this.user, this.userProfile);
-        toastText = 'Welcome, ' + this.userProfile.username;
       }
-      toastText = toastText || 'Welcome back!';
-      console.log('profile: ', this.user);
+      this.manageUserDocument(this.user.uid);
       
-      this.manageUserDocument(this.user.uid)
-      app.$.toast.text = toastText
+      app.$.toast.text = 'Welcome back!';
       app.$.toast.show();
 
-      // app.redirect('events');
+      this._callLoginCallback();
     },
     manageUserDocument: function(uid) {
       var fbdoc = this.$.fbdoc;
       fbdoc.addEventListener('firebase-value', this._onfirebaseValue.bind(this));
-      console.log('this.user.uid', this.user.uid);
       fbdoc.set('location', 'https://udacity-eventplanner.firebaseio.com/users/'+this.user.uid)
     },
     _onfirebaseValue: function() {
-      console.log('firebaseValue');
       app.set('userDataReady', true);
+    },
+    setLoginCallback: function(fn) {
+      this.set('loginCallback', fn);
+    },
+    _callLoginCallback: function() {
+      if(typeof this.loginCallback === "function") {
+        this.loginCallback();
+        this.set('loginCallback', undefined);
+      }
     },
     login: function(userObj) {
       var params = {
@@ -121,9 +126,7 @@
     },
 
     errorHandler: function(e) {
-      // remove this soon; after getting the error event inside the signup.html
       this.message = 'Error: ' + e.detail.message;
-
       app.$.toast.text = this.message;
       app.$.toast.show();
     },
@@ -138,56 +141,15 @@
       this.$.firebaseLogin.createUser(userProfile.email, userProfile.password);
     },
 
-    changePasswordHandler: function(e) {
-      this.$.firebaseLogin.changePassword(this.email, this.password, this.newPassword);
-    },
-
-    resetPasswordHandler: function(e) {
-      this.$.firebaseLogin.sendPasswordResetEmail(this.email);
-    },
-
-    removeUserHandler: function(e) {
-      this.$.firebaseLogin.removeUser(this.email, this.password);
-    },
-
-    computePasswordHidden: function(provider) {
-      return provider !== 'password';
-    },
-
-    computeCreateUserDisabled: function(email, password) {
-      return !email || !password;
-    },
-
-    computeChangePasswordDisabled: function(email, password, newPassword) {
-      return !email || !password || !newPassword;
-    },
-
-    computeResetPasswordDisabled: function(email, password) {
-      return !email || !password;
-    },
-
-    computeRemoveUserDisabled: function(email, password) {
-      return !email || !password;
-    },
-
-    computeLoginHidden: function(statusKnown, user) {
-      return !statusKnown || !!user;
-    },
-
-    computeLogoutHidden: function(statusKnown, user) {
-      return !statusKnown || !user;
-    },
-
     computeLoginStatus: function(statusKnown, user) {
       if (statusKnown && user) {
-        return 'Logged in';
+        return 'Logged in', true;
       }
 
       if (statusKnown) {
-        return 'Logged out';
+        return 'Logged out', false;
       }
-
-      return 'Unknown (checking status...)';
+      return 'Unknown (checking status...)', undefined;
     }
   });
 </script>

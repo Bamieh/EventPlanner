@@ -1,59 +1,93 @@
 <!-- view-event-page: signup page -->
 
-<!-- 
-	Imports: - Polymer
- -->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-
-<!--
-
-### Example Usage:
-	<view-event-page attribute=""><view-event-page>
-
-### Accepts: (attributes you must pass to the component)
-	- attributeName
-		Values:
-
-### Overrides: (properties you can override when calling the component)
-	- PropertyName:
-		Description:
-			Description Here
-		type: 
-		Default value: 
-
-### Fires: (events fired by the component)
-	- EventName
-		Event: When is the event Fired.
-		Returns: What does it return
-
--->
-
 <dom-module id="view-event-page">
-	<style include="form-shared"></style>
 	<style>
 		:host {
 			display: block;
 			color: black;
 		}
-		.card-content {
-			width: 480px;
-		}
-		.card-actions {
 
-		}
 		
 		.paper-input-description {
 			margin: 0;
 			font-size: 10px;
 			text-align: right;
 		}
+		.details-text {
+			font-weight: 300;
+		    font-size: 13px;
+		    padding: 5px;
+		    margin-bottom: 5px;
+		    border-bottom: 1px solid #D8D8D8;
+		}
+		.details-text span{
+			font-weight: 400;
+			font-size: 16px;
+		}
+		.guest-list .label {
+			display: inline-block;
+			padding: 4px 6px;
+			background-color: rgba(63, 81, 181, 0.70);
+			margin: 2px;
+			border-radius: 3px;
+			color: white;
+			font-weight: 300;
+			font-style: 13px;
+		}
+		.card-content {
+			overflow: auto;
+		}
+		.event-card {
+			height: 100%;
+			width: 100%;
+		}
+		@media all and (min-width: 700px) {
+			.event-card {
+				height: 80%;
+				width: 80%;
+			}
+			.card-content {
+				@apply(--layout);
+				@apply(--layout-horizental);
+			}
+			.details-text--last {
+				border: none;
+			}
+			.details {
+				width: 50%;
+			    padding-right: 30px;
+			    overflow: auto;
+			}
+			.guest-list {
+				width: 50%;
+				overflow: auto;
+			}
+		}
 	</style>
+	<style include="form-shared"></style>
 	<template>
-		<paper-card class="responsive-card">
+		<paper-card class="event-card responsive-card">
 			<div class="card-content">
-				[[event.eventHost]]
+				<div class="details" style$="height:[[contentHeight]]px;">
+					<div class="details-text"><span>Event host:</span> [[event.eventHost]] </div>
+					<div class="details-text"><span>Event type:</span> [[event.eventType]] </div>
+					<div class="details-text"><span>Event Date:</span> [[event.startDate]] - [[event.endDate]] </div>
+					<div class="details-text"><span>Event Duration:</span> [[event.startTime]] - [[event.endTime]] </div>
+					<div class="details-text"><span>Location: </span>[[event.location]] </div>
+					<div class="details-text details-text--last"><span>Custom message:</span> [[event.message]] </div>
+					
+				</div>
+				<div class="guest-list" style$="height:[[contentHeight]]px;">
+				<div class="details-text"><span>Guest List:</span> [[event.guestList.length]] </div>
+				<div></div>
+				<template is="dom-repeat" items="[[event.guestList]]" as="guest">
+					<div class="label">[[guest]]</div>
+				</template>
+				</div>
+
+				
 			</div>
 			<div class="card-flex"></div>
 			<div class="card-actions">
@@ -71,6 +105,7 @@
 						type: String,
 						observer: '_onEvent'
 					},
+					contentHeight: Number,
 					event: {
 						type: Object,
 						value: function() {

@@ -1,30 +1,6 @@
 <!-- signin-page: signin page -->
-<!-- 
-	Imports: - Polymer
- -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<!--
 
-### Example Usage:
-	<signin-page attribute=""><signin-page>
-
-### Accepts: (attributes you must pass to the component)
-	- attributeName
-		Values:
-
-### Overrides: (properties you can override when calling the component)
-	- PropertyName:
-		Description:
-			Description Here
-		type: 
-		Default value: 
-
-### Fires: (events fired by the component)
-	- EventName
-		Event: When is the event Fired.
-		Returns: What does it return
-
--->
 <dom-module id="signin-page">
 	<style include="shared-styles"></style>
     <style is="custom-style">
@@ -88,10 +64,12 @@
             },
             _onFormSumbit: function(event) {
 				event.preventDefault();
-				var userObj = {email: "bamieh@yamsafer.me", password: "1@a2#S"};
-				// var userObj = form.serialize();
+				var form = this.$.form;
+				var userObj = form.serialize();
 				var authOptions = {'remember': 'sessionOnly'};
-				
+				app.firebaseManager.setLoginCallback(function() {
+					app.redirect('events');
+				})
 				app.firebaseManager.login(userObj);
 
 			}

@@ -54,7 +54,7 @@
   <span id="browser-sync-binding"></span>
 
   <template is="dom-bind" id="app">
-    <firebase-manager id="firebase-manager" user="{{user}}" user-document="{{userData}}"></firebase-manager>
+    <firebase-manager id="firebase-manager" user="{{user}}" logged-in="{{loggedIn}}" user-document="{{userData}}"></firebase-manager>
 
     <paper-drawer-panel id="drawer" force-narrow>
       <paper-header-panel drawer>
@@ -62,28 +62,32 @@
           <div>Menu</div>
         </paper-toolbar>
         <div class="menu-buttons">
+
           <paper-button on-tap="navigate" data-route="">
             <iron-icon icon="myIconSet:home"></iron-icon>Home
           </paper-button>
-
-          <div class="menu-buttons--title">Not a member? Sign up</div>
-          <paper-button on-tap="navigate" data-route="signup">
-            <iron-icon icon="myIconSet:person-add"></iron-icon>Signup
-          </paper-button>
-          <paper-button on-tap="navigate" data-route="signin">
-            <iron-icon icon="myIconSet:exit-to-app"></iron-icon>Login
-          </paper-button>
-          <div class="menu-buttons--title">Manage Events</div>
-          <paper-button on-tap="navigate" data-route="events">
-            <iron-icon icon="myIconSet:art-track"></iron-icon>View Your Events
-          </paper-button>
-          <paper-button on-tap="navigate" data-route="create-event">
-            <iron-icon icon="myIconSet:format-paint"></iron-icon>Create Event
-          </paper-button>
-          <div class="menu-buttons--seperator"></div>
-          <paper-button on-tap="logout" data-route="home">
-            <iron-icon icon="myIconSet:power-settings-new"></iron-icon>Log out
-          </paper-button>
+          <template is="dom-if" if="{{!loggedIn}}">
+            <div class="menu-buttons--title">Not a member? Sign up</div>
+            <paper-button on-tap="navigate" data-route="signup">
+              <iron-icon icon="myIconSet:person-add"></iron-icon>Signup
+            </paper-button>
+            <paper-button on-tap="navigate" data-route="signin">
+              <iron-icon icon="myIconSet:exit-to-app"></iron-icon>Login
+            </paper-button>
+          </template>
+          <template is="dom-if" if="{{loggedIn}}">
+            <div class="menu-buttons--title">Manage Events</div>
+            <paper-button on-tap="navigate" data-route="events">
+              <iron-icon icon="myIconSet:art-track"></iron-icon>View Your Events
+            </paper-button>
+            <paper-button on-tap="navigate" data-route="create-event">
+              <iron-icon icon="myIconSet:format-paint"></iron-icon>Create Event
+            </paper-button>
+            <div class="menu-buttons--seperator"></div>
+            <paper-button on-tap="logout" data-route="home">
+              <iron-icon icon="myIconSet:power-settings-new"></iron-icon>Log out
+            </paper-button>
+          </template>
         </div>
       </paper-header-panel>
       <paper-header-panel main>

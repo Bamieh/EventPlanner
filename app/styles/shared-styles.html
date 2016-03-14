@@ -1,15 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-styles/typography.html">
 
-<!-- shared styles for all elements and index.html -->
 <dom-module id="shared-styles">
   <template>
-
     <style>
-      .content {
-        color: white;
-        transition: transform 290ms ease-out, opacity 250ms ease-out;
-      }
       .full-bg {
         height:100vh;
         width:100%;
@@ -28,23 +22,6 @@
         background-color: rgba(0,0,0,0.5);
         left: 0;
         z-index: 1;
-      }
-
-      iron-pages {
-        height: 100%;
-      }
-      iron-pages > * {
-        height: inherit;
-        width: 100%;
-        font-family: 'Roboto', sans-serif;
-      /*}
-      iron-pages > .centered {*/
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
-      }
-      #content.transition {
-        transform: translateX(50px);
-        opacity: 0;
       }
 
     </style>

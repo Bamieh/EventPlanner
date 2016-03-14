@@ -1,34 +1,6 @@
 <!-- signup-page: signup page -->
 
-<!-- 
-	Imports: - Polymer
- -->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
-
-<!--
-
-### Example Usage:
-	<signup-page attribute=""><signup-page>
-
-### Accepts: (attributes you must pass to the component)
-	- attributeName
-		Values:
-
-### Overrides: (properties you can override when calling the component)
-	- PropertyName:
-		Description:
-			Description Here
-		type: 
-		Default value: 
-
-### Fires: (events fired by the component)
-	- EventName
-		Event: When is the event Fired.
-		Returns: What does it return
-
--->
 
 <dom-module id="signup-page">
 	<style include="form-shared"></style>
@@ -40,8 +12,10 @@
 		.card-content {
 			width: 480px;
 		}
-		.card-actions {
-
+		.password-error {
+			line-height: 14px;
+		    margin-top: 5px;
+		    white-space: normal;
 		}
 		
 		.paper-input-description {
@@ -56,13 +30,13 @@
 				<form is="iron-form" id="form" method="post" action="#">
 					<div class="double-fields">
 						<paper-input type="email" autocomplete="email" name="email" value="{{ emailBinded }}" label="Email Address" autofocus required></paper-input>
-						<paper-input autocomplete="name" name="username" label="Username" value="{{ autoUsername }}" char-counter maxlength="30" required></paper-input>
+						<paper-input autocomplete="name" name="username" label="Username" value="{{ autoUsername }}" char-counter maxlength="13" required></paper-input>
 					</div>
 
-					<paper-input-container auto-validate attr-for-value="password-input">
+					<paper-input-container auto-validate attr-for-value="value" always-float-label>
 						<label>Password</label>
-						<password-input class="paper-input-input"></password-input>
-						<paper-input-error>
+						<password-input id="passinput" class="paper-input-input"></password-input>
+						<paper-input-error class="password-error">
 							Minimum 6 characters at least 1 Alphabet, 1 Number and 1 Special Character
 						</paper-input-error>
 					</paper-input-container>
@@ -93,31 +67,28 @@
 				attached: function() {
 					var form = this.$.form;
 					form.addEventListener('iron-form-presubmit', this._onFormSumbit.bind(this) );
-					// document.addEventListener('user-created', this._userCreated.bind(this));
 				},
 				_calcAutoUsername: function(emailBinded) {
-					this.set('autoUsername', emailBinded.replace(/@.*/, '') );
+					this.set('autoUsername', emailBinded.replace(/@.*/, '').substring(0,13) );
 				},
 				_redirect: function() {
 					app.redirect('signup');
 				},
 				_onFormSumbit: function(event) {
 					event.preventDefault();
-					// var userObj = {email: "ahmadbamieh@gmail.com", password: "1@a2#S", username: "ahmadbamieh"};
-					var userObj = {email: "bamieh@yamsafer.me", password: "1@a2#S", username: "Ahmad Bamieh"};
-					// var userObj = form.serialize();
+					if(!document.querySelector('#passinput').isValid()) return;
 
+					var form = this.$.form;
+					var userObj = form.serialize();
+					app.firebaseManager.setLoginCallback(function() {
+						app.$.toast.text = 'Success! Welcome, '+ userObj.username;
+						app.$.toast.show();
+						app.redirect('events');
+					});
 					app.firebaseManager.createUserHandler(userObj);
-
 				},
-	            _userCreated: function(e) {
-					if (err) {
-						// this.message....
-						this.$.form.reset();
-					}
-	            },
 				_submit: function() {
-					this.$.form.submit();
+						this.$.form.submit();
 				}
 			});
 		})();

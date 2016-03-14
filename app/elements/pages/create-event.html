@@ -1,32 +1,6 @@
 <!-- create-event-page: signin page -->
-<!-- 
-	Imports: - Polymer
- -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-
-<!--
-
-### Example Usage:
-	<create-event-page attribute=""><create-event-page>
-
-### Accepts: (attributes you must pass to the component)
-	- attributeName
-		Values:
-
-### Overrides: (properties you can override when calling the component)
-	- PropertyName:
-		Description:
-			Description Here
-		type: 
-		Default value: 
-
-### Fires: (events fired by the component)
-	- EventName
-		Event: When is the event Fired.
-		Returns: What does it return
-
--->
 <dom-module id="create-event-page">
 	<style include="form-shared"></style>
 	<style is="custom-style">
@@ -44,23 +18,11 @@
 				@apply(--layout-justified);
 			};
 			--iron-autogrow-textarea: {
-				::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-				    color:    #909;
-				}
-				:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-				   color:    #909;
-				   opacity:  1;
-				}
-				::-moz-placeholder { /* Mozilla Firefox 19+ */
-				   color:    #909;
-				   opacity:  1;
-				}
-				:-ms-input-placeholder { /* Internet Explorer 10-11 */
-				   color:    #909;
-				}
-				:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
-				  color:    #909;
-				}
+				::-webkit-input-placeholder {color:#909;}
+				:-moz-placeholder {color:#909;opacity:1;}
+				::-moz-placeholder {color:#909;opacity:1;}
+				:-ms-input-placeholder {color:#909;}
+				:placeholder-shown {color:#909;}
 			}
 		}
 		.signin-card__signup {
@@ -89,9 +51,10 @@
 			font-weight: 600;
 		}
 		.guest-list {
-			--paper-input-container-underline: {
-				border: none;
-			};
+		    overflow: auto;
+		}
+		[name="guest"] {
+			margin-top: -10px;
 		}
 	}
 	</style>
@@ -112,7 +75,7 @@
 							<paper-input name="event-type" value="{{ eventType }}" label="Type of the event" list="event-type" autofocus required></paper-input>
 							<paper-input name="event-name" value="{{ eventName }}" label="Event Name" required></paper-input>
 							<template is="dom-if" if="[[ _duplicateEvent ]]">
-								<span class="duplicate-error">You already created an event with the same name.</span>
+								<div class="duplicate-error">You already created an event with the same name.</div>
 							</template>
 							
 							<paper-input name="event-host" value="[[ userData.username ]]" label="Event Host" required></paper-input>
@@ -124,25 +87,27 @@
 						</neon-animatable>
 						<neon-animatable>
 							<div class="double-fields">
+
 								<paper-input type="date" value="{{ date }}" name="start-date" label="Start Date" min="[[ today ]]"></paper-input>
-								<paper-input type="date" value="[[ endDate ]]" name="end-date" min="[[ date ]]" label="End Date"></paper-input>
+
+								<paper-input type="date" value="{{endDate}}" name="end-date" min="[[ date ]]" label="End Date"></paper-input>
 							</div>
 							<div class="double-fields">
-								<paper-input type="time" value="{{ time }}" name="start-time" label="Start Date"></paper-input>
-								<paper-input type="time" value="[[ endTime ]]"name="end-time" label="End Date"></paper-input>
+								<paper-input type="time" value="{{ time }}" name="start-time" label="Start Time"></paper-input>
+								<paper-input type="time" value="{{ endTime }}" name="end-time" label="End Time"></paper-input>
 							</div>
 
 							<paper-input name="location" value="[[ address ]]" label="Event Location"></paper-input>
 							
 						</neon-animatable>
 						<neon-animatable>
-							<paper-input name="guest" value="{{ guest }}" placeholder="Bob Dylan" label="Guest Name">
+							<paper-input name="guest" value="{{ guest }}" placeholder="Bob Dylan" label="Guest Name" on-keydown="_guestEnterKey">
 							<paper-icon-button suffix on-tap="_submitGuest" icon="myIconSet:add" alt="add" title="add" disabled="[[_guestDisabledInput]]"></paper-icon-button>
 							</paper-input>
 							<template is="dom-if" if="[[ duplicateGuest ]]">
-								<span class="duplicate-error">You already created an event with the same name.</span>
+								<div class="duplicate-error">You already created an event with the same name.</div>
 							</template>
-							<div class="guest-list">
+							<div class="guest-list" style$="height: [[guestListHeight]]px;">
 								<template is="dom-repeat" items="[[ guestList ]]" as="guestName" index-as="i">
 									<paper-input value="{{ guestName }}" no-label-float>
 										<paper-icon-button suffix on-tap="_deleteGuest" data-index$="[[i]]" icon="myIconSet:delete" alt="add" title="add"></paper-icon-button>
@@ -151,7 +116,7 @@
 							</div>
 						</neon-animatable>
 						<neon-animatable>
-						<iron-autogrow-textarea max-rows="7" rows="4" style="border:none;max-height:120px;max-width:100%;" placeholder="Extra details, such as objectives, personal appeal, or importance"></iron-autogrow-textarea>
+						<iron-autogrow-textarea name="message" max-rows="7" rows="4" style="border:none;max-height:120px;max-width:100%;" placeholder="Extra details, such as objectives, personal appeal, or importance"></iron-autogrow-textarea>
 						</neon-animatable>
 					</neon-animated-pages>
 				</form>
@@ -226,6 +191,10 @@
 					type: Boolean,
 					computed: '_calcHasBack(currentIndex)'
 				},
+				guestListHeight: {
+					type: Number,
+					value: 163
+				},
 				_guestDisabledInput: Boolean,
 				_duplicateEvent: {
 					type: Boolean,
@@ -266,19 +235,27 @@
 					ajaxCity.generateRequest();
 				});
 				this._setDate();
+				window.addEventListener("resize", this._calcHeight.bind(this));
+				this._calcHeight();
+			},
+			_calcHeight: function() {
+				if(window.innerWidth > 480) {
+					this.set('guestListHeight', 163);
+				} else {
+					this.set('guestListHeight', window.innerHeight - 245);
+				}
 			},
 			handleResponse: function(e) {
 				this._setAddress(e.detail.response);
 			},
 			_submitGuest: function() {
-				if(!this.duplicateGuest) {
+				if(!this.duplicateGuest && this.guest.length > 0) {
 					this.unshift('guestList', this.guest);
 					this.set('guest', '');
 				}
 			},
 			_deleteGuest: function(e) {
 				var curIndex = e.currentTarget.dataset.index;
-				console.log(e.currentTarget, e.currentTarget.dataset);
 				this.splice('guestList', curIndex, 1);
 			},
 			_setAddress: function(data) {
@@ -295,9 +272,10 @@
 					dd = this._addZero(today.getDate()),
 					mm = this._addZero(today.getMonth()+1),
 					yyyy = today.getFullYear(),
-					date = yyyy+'-'+dd+'-'+mm;
- 
+					date = yyyy+'-'+mm+'-'+dd;
+				// console.log('date', date);
 				this.set('date', date);
+				// document.querySelector('[name="start-date"]').value = date;
 				this.set('today', date);
 			},
 			_calcEndDate: function(date) {
@@ -316,6 +294,11 @@
 					this.set('eventName', type);
 				}
 			},
+			_guestEnterKey: function(e) {
+			    if (e.which == 13 || e.keyCode == 13) {
+                    this._submitGuest();
+                }
+			},
 			_computeTitle: function(i) {
 				this.set('CurrentTitle', this.pageTitles[i]);
 				return this.pageTitles[i];
@@ -324,15 +307,15 @@
 				app.redirect('signup');
 			},
 			_calcSumbitText: function(currentIndex) {
-				console.log(currentIndex)
 				return (currentIndex < this.pageTitles.length-1)? 'Next' : 'Publish!';
 			},
 			_checkDuplicateGuest: function(guestName) {
-				console.log('guestName', guestName);
-				if(this.guestList.indexOf(guestName) !== -1) {
+				if(this.guestList.indexOf(guestName) !== -1 ) {
 					this.set('duplicateGuest', true);
 					this.set('_guestDisabledInput', true);
-					
+				} else if(guestName.length === 0) {
+					this.set('_guestDisabledInput', true);
+					this.set('duplicateGuest', false);
 				} else {
 					this.set('_guestDisabledInput', false);
 					this.set('duplicateGuest', false);
@@ -375,25 +358,22 @@
 					eventKey = inputs['event-name'],
 					guestList = this.guestList,
 					published = Boolean(this.currentIndex === this.pageTitles.length-1);
-				console.log(inputs);
 				if(published) {
-					console.log('publishing event');
 					var alreadyExists = this._checkDuplicate(eventKey);
 					if(alreadyExists) {
-						console.log('already exists!');
 						return;
 					}
 					app.userData.events = app.userData.events || {};
 					app.set('userData.events.'+ eventKey,  {
-						'eventType': 'Birthday',
-						'eventHost': 'bamieh3',
-						'endDate': "2016-12-03",
-						'endTime': "",
-						'location': "Hôtel de Ville, 75004 Paris, France",
-						'startDate': "2016-12-03",
-						'startTime': "",
+						'eventType': inputs['event-type'],
+						'eventHost': inputs['event-host'],
+						'endDate': inputs['end-date'],
+						'endTime': inputs['end-time'],
+						'location': inputs['location'],
+						'startDate': inputs['start-date'],
+						'startTime': inputs['start-time'],
 						'guestList': guestList,
-						'message': 'message Text'
+						'message': inputs['message']
 					});
 					app.$.toast.text = 'Event Successfully Created!';
 					app.$.toast.show();

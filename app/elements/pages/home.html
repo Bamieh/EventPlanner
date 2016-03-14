@@ -1,34 +1,5 @@
 <!-- home-page: home page -->
-
-<!-- 
-	Imports: - Polymer
- -->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
-
-<!--
-
-### Example Usage:
-	<home-page attribute=""><home-page>
-
-### Accepts: (attributes you must pass to the component)
-	- attributeName
-		Values:
-
-### Overrides: (properties you can override when calling the component)
-	- PropertyName:
-		Description:
-			Description Here
-		type: 
-		Default value: 
-
-### Fires: (events fired by the component)
-	- EventName
-		Event: When is the event Fired.
-		Returns: What does it return
-
--->
 
 <dom-module id="home-page">
 	<style include="shared-styles"></style>
@@ -81,7 +52,7 @@
 					if(app.user && app.user.uid) {
 						app.redirect('events');
 					} else {
-						app.redirect('signup');
+						app.redirect('signin');
 					}
 				}
 			});

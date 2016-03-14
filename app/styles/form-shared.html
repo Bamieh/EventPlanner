@@ -6,6 +6,13 @@
 		paper-button[disabled] {
 			background: none; 
 		}
+		.responsive-card .card-flex {
+			@apply(--layout-flex);
+		}
+		.responsive-card {
+			@apply(--layout);
+			@apply(--layout-vertical);
+		}
 		@media all and (min-width: 481px) {
 			.double-fields {
 				margin-left: -10px;
@@ -30,12 +37,7 @@
 				min-width: 100%;
 				border-radius: 0;
 				height: 100%;
-				@apply(--layout);
-				@apply(--layout-vertical);
 				
-			}
-			.responsive-card .card-flex {
-				@apply(--layout-flex);
 			}
 			.responsive-card .card-content {
 				width: auto;
