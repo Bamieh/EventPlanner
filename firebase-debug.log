@@ -1,0 +1,34 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] Platform:     darwin
+[debug] Node Version: v4.3.1
+[debug] Time:         Mon Mar 14 2016 15:27:51 GMT+0200 (IST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/udacity-eventplanner/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/udacity-eventplanner/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'udacity-eventplanner'...
+[info] 
+[info] i  deploying hosting
+[info] i  preparing dist directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/firebase/udacity-eventplanner/uploads/-KCpIw4BlrKkUPEAnUTV?token=XXX&fileCount=89&message= 
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] Platform:     darwin
+[debug] Node Version: v4.3.1
+[debug] Time:         Mon Mar 14 2016 15:31:44 GMT+0200 (IST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/udacity-eventplanner/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/firebase/udacity-eventplanner/token?token=XXX 
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'udacity-eventplanner'...
+[info] 
+[info] i  deploying hosting
+[info] i  preparing dist directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/firebase/udacity-eventplanner/uploads/-KCpJoqYc2CWhTHCMGQ-?token=XXX&fileCount=89&message= 
