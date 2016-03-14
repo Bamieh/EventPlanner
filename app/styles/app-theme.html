@@ -1,6 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <style is="custom-style">
+html, body {
+    margin:0;
+    padding:0;
+}
 body {
     @apply(--layout-fullbleed);
     @apply(--layout-vertical);
@@ -9,10 +13,11 @@ body {
 .content {
     height: calc( 100% - 56px );
     color: white;
-    transition: transform 290ms ease-out, opacity 250ms ease-out;
+    /*transition: transform 290ms ease-out, opacity 250ms ease-out;*/
+    transition: opacity 290ms ease-out;
 }
 .content.transition {
-    transform: translateX(50px);
+    /*transform: translate(50px, 0);*/
     opacity: 0;
 }
 
