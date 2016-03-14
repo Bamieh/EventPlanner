@@ -30,10 +30,6 @@
 			color: rgba(255,255,255, 0.85);
 			text-transform: none;
 		}
-		.create-event-card--title {
-
-
-		}
 		.create-event-card {
 			@apply(--layout);
 			@apply(--layout-vertical);
@@ -227,10 +223,8 @@
 
 				var self = this;
 				loc.addEventListener('geo-response', function(e) {
-					// var lat = this.latitude;
-					// var long = this.longitude;
-					var lat = '48.856614';
-					var long = '2.3522219000000177';
+					var lat = this.latitude;
+					var long = this.longitude;
 					ajaxCity.set('url', 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false&key=AIzaSyBxbPcTtB4jSpZ7yY7iTXlpgmCVtwBNDzE');
 					ajaxCity.generateRequest();
 				});
@@ -290,9 +284,7 @@
 				return this._addZero(Number(temp[0]) + 3) + ':' + temp[1];
 			},
 			_updateEventName: function(type) {
-				if(this.eventName === '' || this.eventName === undefined) {
-					this.set('eventName', type);
-				}
+				this.set('eventName', type);
 			},
 			_guestEnterKey: function(e) {
 			    if (e.which == 13 || e.keyCode == 13) {

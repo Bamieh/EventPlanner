@@ -8,6 +8,7 @@
 				".tmp",
 				"spec",
 				"node_modules",
+				"dist",
 				".sonar"
 			],
 			"path": "."

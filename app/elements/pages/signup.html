@@ -3,11 +3,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="signup-page">
-	<style include="form-shared"></style>
+	<style include="shared-styles"></style>
 	<style>
 		:host {
 			display: block;
 			color: black;
+			--paper-card-background-color: rgba(255,255,255,0.96);
 		}
 		.card-content {
 			width: 480px;
@@ -24,7 +25,9 @@
 			text-align: right;
 		}
 	</style>
+	<style include="form-shared"></style>
 	<template>
+		<iron-image class="full-bg" sizing="cover" preload src="/images/H120.jpeg"></iron-image>
 		<paper-card class="responsive-card" heading="Sign Up!">
 			<div class="card-content">
 				<form is="iron-form" id="form" method="post" action="#">
@@ -88,7 +91,7 @@
 					app.firebaseManager.createUserHandler(userObj);
 				},
 				_submit: function() {
-						this.$.form.submit();
+					this.$.form.submit();
 				}
 			});
 		})();

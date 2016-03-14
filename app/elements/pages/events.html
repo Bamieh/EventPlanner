@@ -10,7 +10,7 @@
         --paper-input-container-input-color: white;
         --paper-input-container-focus-color: white;
         --paper-card-header-color: white;
-        --paper-card-background-color: rgba(0, 0, 0, 0.3);
+        --paper-card-background-color: rgba(0, 0, 0, 0.65);
         ;
     }
     
@@ -72,7 +72,6 @@
         min-height: 50px;
         margin: 0;
         width: 100%;
-        color: #808080;
     }
     @media all and (min-width: 0) and (max-width: 480px) {
         .event-details .dates {
@@ -91,6 +90,7 @@
     </style>
     <style include="form-shared"></style>
     <template>
+        <iron-image class="full-bg" sizing="cover" preload src="/images/H110.jpeg"></iron-image>
         <template is="dom-if" if="[[ events.length ]]">
             <iron-list items="[[events]]" as="event">
                 <template>
