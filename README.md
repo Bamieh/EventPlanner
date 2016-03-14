@@ -2,17 +2,17 @@
 * Built using Polymer 1.0, through Polymer Starter Kit.
 * Firebase is used to manage accounts and events.
 
-## [Live Demo](https://udacity-eventplanner.firebaseapp.com/)
+### [Live Demo](https://udacity-eventplanner.firebaseapp.com/)
 
 ## Getting Started
 
 1. Clone this repo.
-2. install npm and bower packages. (npm install and bower install).
-3. to run the app locally:
+2. Install npm and bower packages. (npm install and bower install).
+3. To run the app locally:
 ```sh
 gulp serve
 ```
-4. to deploy app (dist folder):
+4. To deploy app (dist folder):
 ```sh
 gulp
 ```
@@ -32,7 +32,7 @@ Firebase Rules:
   }
 }
 ```
-read is for all authenticated users, writes (creating new events, modifying account) only for user with matching uid.
+Read is for all authenticated users, writes (creating new events, modifying account) only for user with matching uid.
 
 
 
