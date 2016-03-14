@@ -97,7 +97,7 @@
 							
 						</neon-animatable>
 						<neon-animatable>
-							<paper-input name="guest" value="{{ guest }}" placeholder="Bob Dylan" label="Guest Name" on-keydown="_guestEnterKey">
+							<paper-input name="guest" value="{{ guest }}" placeholder="ex. Bob Dylan" label="Guest Name" on-keydown="_guestEnterKey">
 							<paper-icon-button suffix on-tap="_submitGuest" icon="myIconSet:add" alt="add" title="add" disabled="[[_guestDisabledInput]]"></paper-icon-button>
 							</paper-input>
 							<template is="dom-if" if="[[ duplicateGuest ]]">
@@ -348,6 +348,7 @@
 				event.preventDefault();
 				var inputs = this.$.form.serialize(),
 					eventKey = inputs['event-name'],
+					message = inputs['message'] || '',
 					guestList = this.guestList,
 					published = Boolean(this.currentIndex === this.pageTitles.length-1);
 				if(published) {
@@ -365,7 +366,7 @@
 						'startDate': inputs['start-date'],
 						'startTime': inputs['start-time'],
 						'guestList': guestList,
-						'message': inputs['message']
+						'message': message
 					});
 					app.$.toast.text = 'Event Successfully Created!';
 					app.$.toast.show();
