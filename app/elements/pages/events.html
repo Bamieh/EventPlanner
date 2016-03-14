@@ -64,6 +64,7 @@
     iron-list {
         height: 100%;
         width: 100%;
+        padding-bottom: 50px;
         /*@apply(--layout-vertical);
         @apply(--layout-center-center);*/
     }
@@ -96,7 +97,21 @@
     .event-type {
         font-size: 12px;
         font-weight: 300;
-    } 
+    }
+    .create-new-event {
+        height: 50px;
+        min-height: 50px;
+        margin: 0;
+        width: 100%;
+    }
+    @media all and (min-width: 0) and (max-width: 480px) {
+        .event-details .dates {
+            padding-top: 20px;
+        }
+        .event-details .location {
+            display: none;
+        }
+    }
     </style>
     <style include="form-shared"></style>
     <template>
@@ -117,45 +132,19 @@
                                         <span>[[event.details.location]]</span>
                                     </div>
                                     <div class="dates">
-                                        <iron-icon class="location-icon" icon="icons:event"></iron-icon>
+                                        <iron-icon class="location-icon" icon="myIconSet:today"></iron-icon>
                                         [[event.details.startDate]] [[event.details.startTime]]
                                     </div>
                                 </div> 
                             </div>
-                            <paper-button class="event-edit">
+                            <paper-button on-tap="_viewEvent" data-route$="[[event.name]]" class="event-edit">
                                 <iron-icon class="location-icon" icon="myIconSet:visibility"></iron-icon>
                             </paper-button>
                         </paper-card>
                     </div>
                 </template>
             </iron-list>
-            <!-- <template is="dom-repeat" items="[[ events ]]" as="event">
-                <paper-card class="event-item">
-                    <div class="card-content">
-                        <div class="event-title">
-                            <div class="heading">
-                                [[event.name]] -- [[event.details.eventType]]
-                            </div>
-                            <div class="host">
-                                Hosted By: [[ event.details.eventHost ]]
-                            </div>
-                        </div>
-                        <div class="event-details">
-                            <div class="location">
-                                <iron-icon class="location-icon" icon="myIconSet:location-on"></iron-icon>
-                                <span>[[event.details.location]]</span>
-                            </div>
-                            <div class="dates">
-                                <iron-icon class="location-icon" icon="icons:event"></iron-icon>
-                                [[event.details.startDate]] [[event.details.startTime]] - [[event.details.endDate]] [[event.details.endTime]]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <paper-button>Full Details</paper-button>
-                </paper-card>
-            </template> -->
-            <paper-button on-tap="_redirect" class="signin-card__signup" noink>
+            <paper-button on-tap="_redirect" class="create-new-event" noink>
                 Create a new Event
             </paper-button>
         </template>
@@ -181,6 +170,9 @@
                     type: Array,
                     computed: '_computeArray(eventsObj)'
                 }
+            },
+            _viewEvent: function(e) {
+                app.redirect('event/'+ e.currentTarget.dataset.route);
             },
             _computeArray: function(obj) {
                 var ar = Object.keys(obj).map(function(key) {

@@ -58,9 +58,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.userSuccessHandler = function(e) {
     console.log(e.type + ' success!');
   }
+
+  app.closeDrawer = function() {
+    app.$.drawer.closeDrawer();
+  }
+
   app.navigate = function(e) {
     app.redirect(e.currentTarget.dataset.route);
-    console.log( app.$.drawer.closeDrawer() );
   }
+
+  app.logout = function() {
+    console.log('loggin out');
+    app.firebaseManager.logout();
+  }
+
 
 })(document);

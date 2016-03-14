@@ -43,6 +43,25 @@
 				@apply(--layout-end);
 				@apply(--layout-justified);
 			};
+			--iron-autogrow-textarea: {
+				::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+				    color:    #909;
+				}
+				:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+				   color:    #909;
+				   opacity:  1;
+				}
+				::-moz-placeholder { /* Mozilla Firefox 19+ */
+				   color:    #909;
+				   opacity:  1;
+				}
+				:-ms-input-placeholder { /* Internet Explorer 10-11 */
+				   color:    #909;
+				}
+				:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+				  color:    #909;
+				}
+			}
 		}
 		.signin-card__signup {
 			font-size: 10px;
@@ -50,6 +69,7 @@
 			text-transform: none;
 		}
 		.create-event-card--title {
+
 
 		}
 		.create-event-card {
@@ -60,6 +80,7 @@
 		}
 		.create-event-card .card-content {
 			min-height: 240px;
+			padding: 0 16px;
 		}
 		.duplicate-error {
 			font-size: 10px;
@@ -67,7 +88,11 @@
 			margin-top: -5px;
 			font-weight: 600;
 		}
-
+		.guest-list {
+			--paper-input-container-underline: {
+				border: none;
+			};
+		}
 	}
 	</style>
 	<style include="form-shared"></style>
@@ -89,6 +114,7 @@
 							<template is="dom-if" if="[[ _duplicateEvent ]]">
 								<span class="duplicate-error">You already created an event with the same name.</span>
 							</template>
+							
 							<paper-input name="event-host" value="[[ userData.username ]]" label="Event Host" required></paper-input>
 							<datalist id="event-type">
 								<template is="dom-repeat" items="[[eventTypes]]" as="eventOption">
@@ -106,14 +132,26 @@
 								<paper-input type="time" value="[[ endTime ]]"name="end-time" label="End Date"></paper-input>
 							</div>
 
-							<paper-input name="location" required value="[[ address ]]" label="Event Location"></paper-input>
+							<paper-input name="location" value="[[ address ]]" label="Event Location"></paper-input>
 							
 						</neon-animatable>
 						<neon-animatable>
-							
+							<paper-input name="guest" value="{{ guest }}" placeholder="Bob Dylan" label="Guest Name">
+							<paper-icon-button suffix on-tap="_submitGuest" icon="myIconSet:add" alt="add" title="add" disabled="[[_guestDisabledInput]]"></paper-icon-button>
+							</paper-input>
+							<template is="dom-if" if="[[ duplicateGuest ]]">
+								<span class="duplicate-error">You already created an event with the same name.</span>
+							</template>
+							<div class="guest-list">
+								<template is="dom-repeat" items="[[ guestList ]]" as="guestName" index-as="i">
+									<paper-input value="{{ guestName }}" no-label-float>
+										<paper-icon-button suffix on-tap="_deleteGuest" data-index$="[[i]]" icon="myIconSet:delete" alt="add" title="add"></paper-icon-button>
+									</paper-input>
+								</template>
+							</div>
 						</neon-animatable>
 						<neon-animatable>
-							
+						<iron-autogrow-textarea max-rows="7" rows="4" style="border:none;max-height:120px;max-width:100%;" placeholder="Extra details, such as objectives, personal appeal, or importance"></iron-autogrow-textarea>
 						</neon-animatable>
 					</neon-animated-pages>
 				</form>
@@ -188,10 +226,22 @@
 					type: Boolean,
 					computed: '_calcHasBack(currentIndex)'
 				},
+				_guestDisabledInput: Boolean,
 				_duplicateEvent: {
 					type: Boolean,
 					value: false
 				},
+				guestList: {
+					type: Array,
+					value: function() {
+						return [];
+					}
+				},
+				guest: {
+					type: String, 
+					observer: '_checkDuplicateGuest'
+				},
+				duplicateGuest: Boolean,
 				address: String,
 				eventTypes: {
 					type: Array,
@@ -219,6 +269,17 @@
 			},
 			handleResponse: function(e) {
 				this._setAddress(e.detail.response);
+			},
+			_submitGuest: function() {
+				if(!this.duplicateGuest) {
+					this.unshift('guestList', this.guest);
+					this.set('guest', '');
+				}
+			},
+			_deleteGuest: function(e) {
+				var curIndex = e.currentTarget.dataset.index;
+				console.log(e.currentTarget, e.currentTarget.dataset);
+				this.splice('guestList', curIndex, 1);
 			},
 			_setAddress: function(data) {
 				if(data && data.status === 'OK') {
@@ -266,6 +327,17 @@
 				console.log(currentIndex)
 				return (currentIndex < this.pageTitles.length-1)? 'Next' : 'Publish!';
 			},
+			_checkDuplicateGuest: function(guestName) {
+				console.log('guestName', guestName);
+				if(this.guestList.indexOf(guestName) !== -1) {
+					this.set('duplicateGuest', true);
+					this.set('_guestDisabledInput', true);
+					
+				} else {
+					this.set('_guestDisabledInput', false);
+					this.set('duplicateGuest', false);
+				}
+			},
 			_sumbit: function() {
 				this._validationRules();
 				this.$.form.submit();
@@ -278,10 +350,12 @@
 				this.$.pages.selectPrevious();
 			},
 			_checkDuplicate: function(inputText) {
-				if(!app.userData) { return };
+				if(!app.userData) { return false};
 				if(app.userData.events && app.userData.events[inputText] && app.userData.events[inputText].published) {
 					this.set('_duplicateEvent', true);
+					return true;
 				} else {
+					return false;
 					this.set('_duplicateEvent', false);
 				}
 			},
@@ -299,10 +373,16 @@
 				event.preventDefault();
 				var inputs = this.$.form.serialize(),
 					eventKey = inputs['event-name'],
+					guestList = this.guestList,
 					published = Boolean(this.currentIndex === this.pageTitles.length-1);
 				console.log(inputs);
 				if(published) {
 					console.log('publishing event');
+					var alreadyExists = this._checkDuplicate(eventKey);
+					if(alreadyExists) {
+						console.log('already exists!');
+						return;
+					}
 					app.userData.events = app.userData.events || {};
 					app.set('userData.events.'+ eventKey,  {
 						'eventType': 'Birthday',
@@ -311,8 +391,13 @@
 						'endTime': "",
 						'location': "Hôtel de Ville, 75004 Paris, France",
 						'startDate': "2016-12-03",
-						'startTime': ""
+						'startTime': "",
+						'guestList': guestList,
+						'message': 'message Text'
 					});
+					app.$.toast.text = 'Event Successfully Created!';
+					app.$.toast.show();
+					app.redirect('events');
 				} else {
 					this._next();
 				}

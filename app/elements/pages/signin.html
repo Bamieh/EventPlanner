@@ -88,20 +88,12 @@
             },
             _onFormSumbit: function(event) {
 				event.preventDefault();
-				var userObj = {email: "ahmadbamieh@gmail.com", password: "1@a2#S"};
+				var userObj = {email: "bamieh@yamsafer.me", password: "1@a2#S"};
 				// var userObj = form.serialize();
 				var authOptions = {'remember': 'sessionOnly'};
 				
 				app.firebaseManager.login(userObj);
 
-
-			},
-            _authWithPasswordCallback: function(error, authData) {
-				if (error) {
-					console.log("Login Failed!", error);
-				} else {
-					console.log("Authenticated successfully with payload:", authData);
-				}
 			}
 		});
     })();

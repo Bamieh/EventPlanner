@@ -29,18 +29,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     function closeDrawer(ctx, next) {
-      // app.closeDrawer();
+      app.closeDrawer();
       next();
     }
 
     function manageUserData(ctx, next) {
-      console.log('setting active', app.user);
       app.$.loader.active = true;
-      if(!app.user || (app.user && !app.user.uid)) {
-        app.$.loader.active = false;
-        next();
-        return;
-      }
 
       if(app.userDataReady) {
         console.log('dataReady already true');
@@ -65,8 +59,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, 300);
     }
 
+    function preventAuthenticated(ctx, next) {
+      console.log('checking preventAuthenticated')
+      console.log('app.user', app.user);
+      if(app.user && app.user.uid) {
+        app.$.toast.text = 'Already Logged in.';
+        app.$.toast.show();
+        page.redirect(app.baseUrl+'events');
+      } else {
+        next();
+      }
+    }
+
+    function requireAuthentication(ctx, next) {
+      if(app.user && app.user.uid) {
+        next();
+      } else {
+        console.log('requires login');
+        app.$.toast.text = 'You to be logged in first.';
+        app.$.toast.show();
+        page.redirect(app.baseUrl+'signin');
+      }
+    }
+
     // Routes
-    page('*', scrollToTop, closeDrawer, manageUserData, function(ctx, next) {
+    page('*', scrollToTop, closeDrawer, function(ctx, next) {
       if (ctx.init) {
         next();
       } else {
@@ -77,31 +94,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/', function() {
       app.route = 'home';
+      app.pageTitle = '';
     });
 
     page(app.baseUrl, function() {
       app.route = 'home';
+      app.pageTitle = '';
     });
 
-    page('/user/:name', function(data) {
-      app.route = 'user-info';
-      app.params = data.params;
-    });
     
-    page('/signup', function() {
+    page('/signup', preventAuthenticated, function() {
       app.route = 'signup';
+      app.pageTitle = 'Signup';
     });
 
-    page('/create-event', function() {
+    page('/create-event', requireAuthentication, manageUserData, function() {
       app.route = 'create-event';
+      app.pageTitle = 'Create an Event';
     });
 
-    page('/signin', function() {
+    page('/signin', preventAuthenticated, function() {
       app.route = 'signin';
+      app.pageTitle = 'Your Events';
     });
 
-    page('/events', function() {
+    page('/event/:eventName', requireAuthentication, manageUserData, function(data) {
+      app.route = 'view-event';
+      app.selectedEvent = data.params.eventName;
+      console.log('data.params', data.params.eventName)
+      app.pageTitle = 'Event: '+ data.params.eventName;
+    });
+
+    page('/events', requireAuthentication, manageUserData, function() {
       app.route = 'events';
+      app.pageTitle = 'Your Events';
     });
 
     // 404

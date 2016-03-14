@@ -78,7 +78,11 @@
 					}
 				},
 				_redirect: function() {
-					app.redirect('signup');
+					if(app.user && app.user.uid) {
+						app.redirect('events');
+					} else {
+						app.redirect('signup');
+					}
 				}
 			});
 		})();
