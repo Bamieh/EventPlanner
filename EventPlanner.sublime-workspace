@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"login",
+				"loginCallback"
+			],
+			[
+				"onl",
+				"onLoggedOut"
+			],
+			[
+				"onLogg",
+				"onLoggedIn"
+			],
+			[
+				"pad",
+				"padding-bottom"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
 				"event",
 				"event-host"
 			],
@@ -22,10 +42,6 @@
 			[
 				"set",
 				"setFbLocation"
-			],
-			[
-				"mar",
-				"margin-bottom"
 			],
 			[
 				"back",
@@ -106,10 +122,6 @@
 			[
 				"gallerySlec",
 				"gallerySelectorQuery"
-			],
-			[
-				"pad",
-				"padding-bottom"
 			],
 			[
 				"bak",
@@ -473,7 +485,7 @@
 				"Package Control: List Packages"
 			]
 		],
-		"width": 449.0
+		"width": 431.0
 	},
 	"console":
 	{
@@ -494,20 +506,31 @@
 	},
 	"file_history":
 	[
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/routing.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/create-event.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/edit-event.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/password-input.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/signup.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/firebase-manager.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/index.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/scripts/app.js",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/main.css",
 		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/signin.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/form-shared.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/elements.html",
-		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/events.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/create-event.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/password-input.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/shared-styles.html",
 		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/app-theme.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/main.css",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/signup.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/index.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/view-event.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/events.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/EventPlanner.sublime-project",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/styles/form-shared.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/firebase.json",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/manifest.json",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/password-validator.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/scripts/app.js",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/home.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/routing.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/firebase-manager.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/bower_components/prism/tests/languages/r/operator_feature.test",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/elements.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/bower_components/iron-flex-layout/iron-flex-layout.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/custom/selected-icons.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/bower_components/iron-icon/iron-icon.html",
+		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages/edit-event.html",
 		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/bower_components/firebase-element/firebase-query-behavior.html",
 		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/index_rm",
 		"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/bower_components/firebase-element/firebase-collection.html",
@@ -610,18 +633,7 @@
 		"/Users/bamieh/Bamieh/TheShip/views/hotelpage/components/floating-menus/datepicker.jade",
 		"/Users/bamieh/Bamieh/TheShip/views/components/header/calendar.jade",
 		"/Users/bamieh/Bamieh/TheShip/views/hotelpage/sections/reviews.jade",
-		"/Users/bamieh/Bamieh/TheShip/assets/styles/yamsafer/_lists.scss",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/search/index.js",
-		"/Users/bamieh/Bamieh/TheShip/views/hotelpage/sections/header.jade",
-		"/Users/bamieh/Bamieh/TheShip/views/hotelpage/components/map-fullscreen.jade",
-		"/Users/bamieh/Bamieh/TheShip/views/hotelpage/sections/reviews-ajaxed.jade",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/components/datepicker/mobile.js",
-		"/Users/bamieh/Bamieh/TheShip/views/location/map-and-attractions.jade",
-		"/Users/bamieh/Bamieh/TheShip/views/organisms/map-and-attractions/index.jade",
-		"/Users/bamieh/Bamieh/TheShip/views/hotelpage/components/map.jade",
-		"/Users/bamieh/Bamieh/TheShip/assets/js/components/searcher/index.js",
-		"/Users/bamieh/Bamieh/TheShip/assets/styles/search/ys-fullscreen-dialog.scss",
-		"/Users/bamieh/Bamieh/TheShip/assets/styles/hotelpage/index.scss"
+		"/Users/bamieh/Bamieh/TheShip/assets/styles/yamsafer/_lists.scss"
 	],
 	"find":
 	{
@@ -632,6 +644,7 @@
 		"height": 109.0,
 		"where_history":
 		[
+			"/Users/Bamieh/Bamieh/Udacity/EventPlanner/app/elements/pages",
 			"",
 			"/Users/bamieh/Bamieh/TheShip/api/controllers",
 			"/Users/bamieh/Bamieh/TheShip/api",
@@ -688,6 +701,109 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"0",
+			"_updateEventName",
+			"eventType",
+			"eventName",
+			"address",
+			"location",
+			"Polymer Starter Kit",
+			".js",
+			"[[contentHeight]]",
+			"underline",
+			"contentHeight]]",
+			"dom-repeat",
+			"dom-repeate",
+			"details-text",
+			"border",
+			"border-bo",
+			"<div",
+			"<div>",
+			"h3",
+			"					",
+			"cons",
+			"[name=\"password\"]",
+			"_userCreated",
+			"createUserHandler",
+			"_userCreated",
+			"span class=\"duplicate-error\"",
+			"event",
+			"enter",
+			"changePasswordHandler",
+			"password",
+			"computeRemoveUserDisabled",
+			"computeResetPasswordDisabled",
+			"computeChangePasswordDisabled",
+			"computePasswordHidden",
+			"computeCreateUserDisabled",
+			"conso",
+			"console",
+			"userSuccessHandler",
+			"conso",
+			"displayInstalledToast",
+			"scrollToTop",
+			"userSuccessHandler",
+			"conso",
+			"logged in",
+			"paper-item",
+			"paper-scroll-header-panel",
+			"paper-material",
+			"iron-selector",
+			"iron-pages",
+			"paper-menu",
+			"paper-material",
+			"user",
+			"callback",
+			"userProfile",
+			"dom-if",
+			"computeLoginStatus",
+			"909",
+			"create-event-card",
+			".create-event-card",
+			"image",
+			"_guestDisabledInput",
+			"_guestDisabled",
+			"duplicateGuest",
+			"DuplicateGuest",
+			"duplicateGuest",
+			"DuplicateGuest",
+			"duplicateGuest",
+			"index",
+			"<template is=\"dom-repeat\" ",
+			"iron-list",
+			"iron-list ",
+			"submitGuest",
+			"card-content",
+			"view-event",
+			"viewEvent",
+			"signup-page",
+			"waitForData",
+			"title",
+			"icon",
+			".menu-buttons",
+			"manageUserData",
+			"authenticate",
+			"_authWithPasswordCallback",
+			"manageUserData",
+			"requiresLogin",
+			"userSuccessHandler",
+			"logout",
+			"computeLoginHidden",
+			"rate-content",
+			"menu-item",
+			"calc",
+			"iron-pages",
+			"').required",
+			"this.$$('",
+			"required",
+			"_sumbit",
+			"1",
+			"						",
+			"	",
+			"start",
+			"span",
+			"30",
+			"start",
 			"fbdoc",
 			"{{",
 			"ready",
@@ -712,110 +828,7 @@
 			"app.",
 			"user-data-ready",
 			"next",
-			"conso",
-			"calcEndTime",
-			"calcEndDate",
-			"value",
-			"addZero",
-			"i",
-			"today",
-			"date",
-			"var",
-			"10",
-			"style",
-			"getAddress",
-			"list=\"event-type\" ",
-			"alue=\"{{ eventType }}\"",
-			"event de",
-			"userId",
-			"list=\"browsers\"",
-			"dom-repeat",
-			", ",
-			"browsers",
-			"redirect",
-			"create-event-page",
-			"../bower_components",
-			"signin-page",
-			"create-event",
-			"create-events",
-			"<a",
-			"next();",
-			"loader",
-			"dom-if",
-			"events-page",
-			"_onQueryValue",
-			"Value",
-			"value",
-			"off",
-			"on",
-			"toolbar",
-			"on:",
-			"firebaseValue",
-			"this.",
-			"userId",
-			"baseURL",
-			"dinosaur",
-			"dinosaurs",
-			"createUserHandler",
-			".new(",
-			".new",
-			"consol",
-			"isProceed",
-			"reviews",
-			"results['reviews']",
-			"console.",
-			"console",
-			"search",
-			"console.log",
-			"window.",
-			"position: sticky",
-			"ys-but",
-			"criticalCss",
-			"smartScroll.scroll",
-			"button",
-			"POST",
-			"console",
-			".navbar-fixed-top",
-			"+navbar",
-			"navbar-fixed-top",
-			".navbar",
-			"iron-",
-			"/*",
-			"conso",
-			".score-bars",
-			"__counters",
-			"ys-rooms-basket__counters",
-			"available-rooms-for-search",
-			"Your trip dates",
-			".edit-rooms",
-			"newRate",
-			"results['dateful']",
-			"max-",
-			"&& ",
-			"room",
-			"room-details",
-			"openCancellaion",
-			"details",
-			"room-",
-			".card-room",
-			".card-room-description_policy",
-			"-107",
-			"107",
-			"cancellation-policy",
-			"#checkin, #checkout",
-			"#checkin,#checkout",
-			"50px !important;",
-			"#checkin, #checkout",
-			".score-bars",
-			"computeShowAmenities",
-			"computeSource",
-			"computeHideAll",
-			"horizontalOffset",
-			"mixin score-bars",
-			".endorsment-labels",
-			"mixin endorsmet-labels",
-			"__ti",
-			"__tot"
+			"conso"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -885,16 +898,52 @@
 		"selected_items":
 		[
 			[
+				"rout",
+				"app/elements/routing.html"
+			],
+			[
+				"route",
+				"app/bower_components/prism/tests/languages/r/operator_feature.test"
+			],
+			[
+				"form-sha",
+				"app/styles/form-shared.html"
+			],
+			[
+				"elemen",
+				"app/elements/elements.html"
+			],
+			[
+				"ironflex",
+				"app/bower_components/iron-flex-layout/iron-flex-layout.html"
+			],
+			[
+				"eleme",
+				"app/elements/elements.html"
+			],
+			[
+				"flexlay",
+				"app/bower_components/iron-flex-layout/iron-flex-layout.html"
+			],
+			[
+				"app-the",
+				"app/styles/app-theme.html"
+			],
+			[
+				"layout",
+				"app/bower_components/iron-flex-layout/iron-flex-layout.html"
+			],
+			[
+				"ironicon",
+				"app/bower_components/iron-icon/iron-icon.html"
+			],
+			[
 				"routing",
 				"app/elements/routing.html"
 			],
 			[
 				"index",
 				"app/index.html"
-			],
-			[
-				"elemen",
-				"app/elements/elements.html"
 			],
 			[
 				"firebasebeh",
@@ -1359,42 +1408,6 @@
 			[
 				"yssma",
 				"assets/elements/ys-smart-float/ys-smart-float.html"
-			],
-			[
-				"ysbas",
-				"assets/elements/hotel/ys-rooms-basket/ys-rooms-basket.html"
-			],
-			[
-				"varia",
-				"assets/styles/yamsafer/_variables.scss"
-			],
-			[
-				"ysfll",
-				"assets/elements/ys-fullscreen-dialog/ys-fullscreen-dialog.html"
-			],
-			[
-				"yssmar",
-				"assets/elements/ys-smart-float/ys-smart-float.html"
-			],
-			[
-				"componentsheadercal",
-				"views/components/header/calendar.jade"
-			],
-			[
-				"baske.js",
-				"assets/js/hotelpage/dateful/basket.js"
-			],
-			[
-				"roomra",
-				"assets/elements/hotel/ys-rooms-rate/ys-rooms-rate.html"
-			],
-			[
-				"mxiin",
-				"assets/styles/yamsafer/_mixins.scss"
-			],
-			[
-				"basket.js",
-				"assets/js/hotelpage/dateful/basket.js"
 			]
 		],
 		"width": 0.0
