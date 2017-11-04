@@ -1,4 +1,6 @@
 ## Udacity Event Planner Project
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Bamieh/EventPlanner.svg)](https://greenkeeper.io/)
 * Built using Polymer 1.0, through Polymer Starter Kit.
 * Firebase is used to manage accounts and events.
 
